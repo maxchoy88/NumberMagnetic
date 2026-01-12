@@ -3,92 +3,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>八星灵数能量分析</title>
+    <title>手机号八星灵数 - 1800字至尊报告版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --ji-color: #27ae60;
-            --xiong-color: #c0392b;
-            --bg-color: #f4f7f6;
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        body {
+            font-family: 'Noto+Sans+SC', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            min-height: 100vh;
         }
-        body { font-family: 'PingFang SC', sans-serif; background: var(--bg-color); padding: 20px; }
-        .container { max-width: 500px; margin: 0 auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h2 { text-align: center; color: #2c3e50; }
-        input { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 18px; text-align: center; }
-        button { width: 100%; padding: 12px; background: #3498db; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #2980b9; }
-        #results { margin-top: 20px; }
-        .star-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; align-items: center; }
-        .star-name { font-weight: bold; padding: 4px 8px; border-radius: 4px; color: white; }
-        .ji { background-color: var(--ji-color); }
-        .xiong { background-color: var(--xiong-color); }
-        .num-pair { font-family: monospace; font-size: 18px; color: #34495e; }
-        .desc { font-size: 12px; color: #7f8c8d; margin-top: 5px; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.1);
+        }
+        .star-badge {
+            @apply px-2 py-1 rounded text-[10px] md:text-xs font-bold inline-block mr-1 mb-1 shadow-sm transition-transform hover:scale-105;
+        }
+        .auspicious-bg { background-color: #f0fdf4; border: 1px solid #dcfce7; color: #166534; }
+        .inauspicious-bg { background-color: #fef2f2; border: 1px solid #fee2e2; color: #991b1b; }
+        
+        .report-section {
+            background: #fff;
+            border: 1px dashed #cbd5e1;
+            padding: 3rem;
+            border-radius: 2rem;
+            line-height: 2.2;
+            color: #1e293b;
+            font-size: 1rem;
+            text-align: justify;
+        }
+        /* Buttons Style */
+        .whatsapp-btn { background-color: #25D366; }
+        .whatsapp-btn:hover { background-color: #128C7E; transform: translateY(-2px); }
+        .email-btn { background-color: #4f46e5; }
+        .email-btn:hover { background-color: #4338ca; transform: translateY(-2px); }
+        .print-btn { background-color: #64748b; }
+        .print-btn:hover { background-color: #475569; transform: translateY(-2px); }
+
+        .brief-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 1rem;
+        }
+        #msgModal {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            animation: slideDown 0.3s ease-out;
+        }
+        @keyframes slideDown {
+            from { top: -50px; opacity: 0; }
+            to { top: 20px; opacity: 1; }
+        }
+
+        /* Print Optimization */
+        @media print {
+            body { background: white !important; padding: 0 !important; }
+            .no-print, #msgModal, .whatsapp-btn, .email-btn, .print-btn, .bg-white.p-8.rounded-3xl.mb-10 {
+                display: none !important;
+            }
+            .glass-card { box-shadow: none !important; border: none !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+            .report-section { border: 1px solid #eee !important; page-break-inside: auto; }
+            section { page-break-inside: avoid; margin-bottom: 2rem; }
+            h1, h2, h3 { color: black !important; }
+        }
     </style>
 </head>
-<body>
+<body class="p-4 md:p-8 flex items-start justify-center">
 
-<div class="container">
-    <h2>✨ 八星灵数分析 ✨</h2>
-    <input type="number" id="phoneInput" placeholder="请输入手机号或数字串" maxlength="11">
-    <button onclick="analyze()">点击分析能量</button>
+    <div id="msgModal" class="bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl flex items-center space-x-3">
+        <span id="modalText"></span>
+        <button onclick="hideModal()" class="text-amber-400 font-bold ml-2">明白</button>
+    </div>
 
-    <div id="results"></div>
-</div>
+    <div class="max-w-6xl w-full glass-card p-6 md:p-12 my-4">
+        <div class="text-center mb-10 no-print">
+            <h1 class="text-4xl font-extrabold text-slate-800 mb-3 tracking-tight">🔮 八星灵数：1800字至尊报告</h1>
+            <p class="text-slate-500 text-lg">全维度推演人生财库、情感宿命、健康预警及投资蓝图</p>
+        </div>
 
-<script>
-    // 八星数据库
-    const starData = {
-        // 四吉星
-        "天医": { pairs: ["13","31","68","86","49","94","27","72"], type: "ji", desc: "主大财、聪明、婚姻、正桃花" },
-        "延年": { pairs: ["19","91","78","87","34","43","26","62"], type: "ji", desc: "主事业、领导力、长寿、责任感" },
-        "生气": { pairs: ["14","41","67","76","39","93","28","82"], type: "ji", desc: "主贵人、乐观、名气、逢凶化吉" },
-        "伏位": { pairs: ["11","22","88","99","66","77","33","44"], type: "ji", desc: "主平稳、被动、思考、等待机会" },
-        // 四凶星
-        "绝命": { pairs: ["12","21","69","96","48","84","37","73"], type: "xiong", desc: "主走极端、投资失利、好胜心、离异" },
-        "五鬼": { pairs: ["18","81","79","97","36","63","24","42"], type: "xiong", desc: "主变动、才华、血光、不稳定性" },
-        "六煞": { pairs: ["16","61","47","74","38","83","29","92"], type: "xiong", desc: "主忧郁、人际关系、偏桃花、压力" },
-        "祸害": { pairs: ["17","71","89","98","46","64","23","32"], type: "xiong", desc: "主口舌、疾病、意外、小人" }
-    };
+        <!-- Input Section (Hidden in Print) -->
+        <div class="bg-white p-8 rounded-3xl mb-10 border border-slate-200 shadow-inner no-print">
+            <div class="max-w-3xl mx-auto space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-2">姓名 / 昵称</label>
+                        <input type="text" id="nameInput" 
+                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:border-indigo-500 outline-none transition-all"
+                            placeholder="阿盛"
+                            maxlength="20">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-2">手机号码</label>
+                        <input type="text" id="phoneInput" 
+                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:border-indigo-500 outline-none text-xl font-mono tracking-wider transition-all"
+                            placeholder="10 或 11 位"
+                            maxlength="11">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-2">电子邮箱</label>
+                        <input type="email" id="emailInput" 
+                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:border-indigo-500 outline-none transition-all"
+                            placeholder="your@email.com">
+                    </div>
+                </div>
+                <button onclick="analyzeAll()" 
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl transition-all shadow-xl active:scale-95">
+                    立即开启 1800 字深度人生推演
+                </button>
+            </div>
+        </div>
 
-    function analyze() {
-        const input = document.getElementById('phoneInput').value;
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = "";
+        <div id="resultArea" class="hidden space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            
+            <div class="text-center border-b pb-6">
+                <h2 id="reportMainTitle" class="text-3xl font-bold text-slate-800 tracking-tight">测算报告加载中...</h2>
+            </div>
 
-        if (input.length < 2) {
-            alert("请输入至少2位数字");
-            return;
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Soul Card -->
+                <div class="bg-indigo-600 text-white p-8 rounded-3xl text-center flex flex-col justify-center shadow-2xl">
+                    <p class="text-indigo-200 text-xs font-bold uppercase tracking-widest mb-2">生命内核灵数</p>
+                    <div id="soulNumber" class="text-8xl font-black">0</div>
+                    <div id="numberTag" class="mt-4 font-bold bg-white/20 rounded-full py-2 text-md">加载中</div>
+                </div>
+
+                <!-- Briefing Dashboard -->
+                <div class="lg:col-span-3 bg-white border border-slate-100 p-8 rounded-3xl shadow-sm">
+                    <h3 class="font-bold text-slate-800 text-xl mb-6 flex items-center">
+                        <span class="mr-3 text-indigo-500">📊</span> 八星能量实时简报
+                    </h3>
+                    <div id="starBriefing" class="brief-grid mb-6"></div>
+                    <div id="starSequence" class="flex flex-wrap gap-2 mt-6 border-t pt-6"></div>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Action Buttons (Hidden in Print) -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 px-4">
+                    <h3 class="text-2xl font-bold text-slate-800 flex items-center">
+                        <span class="mr-3 text-indigo-600">📜</span> 1800字至尊生命蓝图报告
+                    </h3>
+                    <div class="flex flex-wrap gap-3 no-print">
+                        <button onclick="shareToWhatsApp()" class="whatsapp-btn text-white px-5 py-2.5 rounded-xl font-bold flex items-center shadow-lg active:scale-95">
+                            WhatsApp
+                        </button>
+                        <button onclick="shareToEmail()" class="email-btn text-white px-5 py-2.5 rounded-xl font-bold flex items-center shadow-lg active:scale-95">
+                            邮件
+                        </button>
+                        <button onclick="window.print()" class="print-btn text-white px-5 py-2.5 rounded-xl font-bold flex items-center shadow-lg active:scale-95">
+                            打印报告
+                        </button>
+                    </div>
+                </div>
+                <!-- Report Content -->
+                <div id="masterReport" class="report-section shadow-xl border-slate-100"></div>
+            </div>
+        </div>
+
+        <div class="mt-16 text-center text-xs text-slate-400 border-t pt-8 no-print">
+            <p>※ 建议 <strong>阿盛</strong> 多利用灵数优势进行决策。祝 <strong>MONEY</strong> 每天都有美味罐罐！</p>
+        </div>
+    </div>
+
+    <script>
+        const starMap = {
+            "13": "天医", "31": "天医", "68": "天医", "86": "天医", "49": "天医", "94": "天医", "27": "天医", "72": "天医",
+            "19": "延年", "91": "延年", "78": "延年", "87": "延年", "34": "延年", "43": "延年", "26": "延年", "62": "延年",
+            "14": "生气", "41": "生气", "67": "生气", "76": "生气", "39": "生气", "93": "生气", "28": "生气", "82": "生气",
+            "11": "伏位", "22": "伏位", "33": "伏位", "44": "伏位", "55": "伏位", "66": "伏位", "77": "伏位", "88": "伏位", "99": "伏位", "00": "伏位",
+            "12": "绝命", "21": "绝命", "69": "绝命", "96": "绝命", "48": "绝命", "84": "绝命", "37": "绝命", "73": "绝命",
+            "18": "五鬼", "81": "五鬼", "79": "五鬼", "97": "五鬼", "36": "五鬼", "63": "五鬼", "24": "五鬼", "42": "五鬼",
+            "16": "六煞", "61": "六煞", "47": "六煞", "74": "六煞", "38": "六煞", "83": "六煞", "29": "六煞", "92": "六煞",
+            "17": "祸害", "71": "祸害", "89": "祸害", "98": "祸害", "46": "祸害", "64": "祸害", "23": "祸害", "32": "祸害"
+        };
+
+        const lifePathData = {
+            1: "开拓型", 2: "协调型", 3: "表达型", 4: "务实型", 5: "自由型", 6: "奉献型", 7: "探求型", 8: "成就型", 9: "利他型"
+        };
+
+        const starMeta = {
+            "天医": { type: "aus", label: "财运/正缘" },
+            "延年": { type: "aus", label: "事业/能力" },
+            "生气": { type: "aus", label: "贵人/乐天" },
+            "伏位": { type: "aus", label: "守成/等待" },
+            "绝命": { type: "inaus", label: "冒险/耗损" },
+            "五鬼": { type: "inaus", label: "变动/疑虑" },
+            "六煞": { type: "inaus", label: "情感/桃花" },
+            "祸害": { type: "inaus", label: "口舌/健康" }
+        };
+
+        function showModal(text) {
+            document.getElementById('modalText').innerText = text;
+            document.getElementById('msgModal').style.display = 'flex';
+        }
+        function hideModal() {
+            document.getElementById('msgModal').style.display = 'none';
         }
 
-        // 拆解数字对 (例如 139 -> 13, 39)
-        for (let i = 0; i < input.length - 1; i++) {
-            let pair = input.substring(i, i + 2);
-            let foundStar = "其他";
-            let starInfo = { type: "neutral", desc: "无显著能量" };
+        function analyzeAll() {
+            const name = document.getElementById('nameInput').value.trim() || "测算者";
+            const phoneInput = document.getElementById('phoneInput').value;
+            const digits = phoneInput.replace(/\D/g, '');
+            
+            if (digits.length < 10 || digits.length > 11) {
+                showModal('阿盛提示：请填写 10 或 11 位号码进行推算。');
+                return;
+            }
 
-            // 匹配数据库
-            for (let name in starData) {
-                if (starData[name].pairs.includes(pair)) {
-                    foundStar = name;
-                    starInfo = starData[name];
-                    break;
+            let sum = digits.split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+            while (sum > 9) {
+                sum = sum.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+            }
+
+            const sequence = [];
+            const stats = { "天医": 0, "延年": 0, "生气": 0, "伏位": 0, "绝命": 0, "五鬼": 0, "六煞": 0, "祸害": 0 };
+            for (let i = 0; i < digits.length - 1; i++) {
+                let pair = digits.substring(i, i + 2);
+                if (starMap[pair]) {
+                    const sName = starMap[pair];
+                    sequence.push({ pair, name: sName });
+                    stats[sName]++;
                 }
             }
 
-            // 渲染到界面
-            const item = document.createElement('div');
-            item.className = 'star-item';
-            item.innerHTML = `
-                <div>
-                    <span class="num-pair">${pair}</span>
-                    <div class="desc">${starInfo.desc}</div>
-                </div>
-                <span class="star-name ${starInfo.type}">${foundStar}</span>
-            `;
-            resultsDiv.appendChild(item);
+            displayResults(name, sum, sequence, stats, digits);
         }
-    }
-</script>
 
+        function displayResults(name, soulNum, sequence, stats, fullNum) {
+            document.getElementById('resultArea').classList.remove('hidden');
+            document.getElementById('reportMainTitle').innerText = `${name} 的生命能量深度解析蓝图`;
+            document.getElementById('soulNumber').innerText = soulNum;
+            document.getElementById('numberTag').innerText = lifePathData[soulNum];
+            
+            const briefingDiv = document.getElementById('starBriefing');
+            briefingDiv.innerHTML = '';
+            Object.keys(starMeta).forEach(star => {
+                const meta = starMeta[star];
+                const count = stats[star];
+                const item = document.createElement('div');
+                item.className = `p-4 rounded-3xl text-center border-2 ${count > 0 ? (meta.type === 'aus' ? 'auspicious-bg' : 'inauspicious-bg') : 'bg-slate-50 border-slate-100 text-slate-300'}`;
+                item.innerHTML = `
+                    <p class="text-[10px] uppercase font-bold tracking-widest opacity-60 mb-1">${meta.label}</p>
+                    <p class="text-sm font-black mb-1">${star}</p>
+                    <p class="text-2xl">${count}</p>
+                `;
+                briefingDiv.appendChild(item);
+            });
+
+            const seqDiv = document.getElementById('starSequence');
+            seqDiv.innerHTML = '<p class="w-full text-[10px] text-slate-400 mb-3 font-bold uppercase tracking-widest">号码内部能量脉络:</p>';
+            sequence.forEach(item => {
+                const span = document.createElement('span');
+                const isAus = starMeta[item.name].type === "aus";
+                span.className = `star-badge p-2 px-3 ${isAus ? 'auspicious-bg' : 'inauspicious-bg'}`;
+                span.innerText = `${item.name}(${item.pair})`;
+                seqDiv.appendChild(span);
+            });
+
+            generateMasterReport(name, soulNum, stats, sequence, fullNum);
+            document.getElementById('resultArea').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function generateMasterReport(name, soulNum, stats, sequence, fullNum) {
+            const reportDiv = document.getElementById('masterReport');
+            const ausTotal = stats["天医"] + stats["延年"] + stats["生气"] + stats["伏位"];
+            const inausTotal = stats["绝命"] + stats["五鬼"] + stats["六煞"] + stats["祸害"];
+            
+            let content = `<div class="space-y-8 text-slate-700">`;
+            
+            content += `<section>
+                <h4 class="text-2xl font-bold text-indigo-900 border-l-8 border-indigo-600 pl-4 mb-6">第一篇章：灵魂本色与时空锚点</h4>
+                <p class="indent-8 mb-4">在数字能量学的至尊体系中，每一个数字序列都是宇宙微弱振动在物质维度的投射。针对 <strong>${name}</strong> 的号码 ${fullNum} 进行的深度磁场剥离显示，您的生命频率锚定在 <strong>${soulNum} 号“${lifePathData[soulNum]}”</strong> 上。</p>
+                <p class="indent-8 mb-4">意味着 <strong>${name}</strong> 无论外界环境如何变迁，灵魂底层逻辑始终遵循一种${soulNum % 2 === 0 ? '极具韧性、注重逻辑' : '极具爆发力、敢于突破边界'}的模式。目前处于“${ausTotal >= inausTotal ? '正向累加' : '剧烈重塑'}”阶段。即使有凶星，您的灵魂底色也能通过理性的重组转危为安。阿盛请记住：意志才是您的导航仪。</p>
+            </section>`;
+
+            content += `<section>
+                <h4 class="text-2xl font-bold text-indigo-900 border-l-8 border-indigo-600 pl-4 mb-6">第二篇章：财库推演与事业裂变逻辑</h4>
+                <p class="indent-8 mb-4">财富不仅是数字，更是频率的共振。<strong>${name}</strong> 拥有 <strong>${stats["天医"]}</strong> 组天医财星。这意味着财富的获取依赖于您的直觉与对信息流的掌控。</p>
+                <p class="indent-8 mb-4">事业格属于“${stats["延年"] > 0 ? '将帅级' : '奇策级'}”。${stats["延年"] > 0 ? '延年能量赋予您极强的专业素养，财富积累具有延续性。' : '由于缺乏强延年阵，财富流向偏向爆发式。必须建立强制储蓄，否则财来财去易成幻象。'} 对于阿盛而言，最佳变现逻辑是利用“生气”磁场整合资源，再用“天医”精准收割。 </p>
+            </section>`;
+
+            content += `<section>
+                <h4 class="text-2xl font-bold text-indigo-900 border-l-8 border-indigo-600 pl-4 mb-6">第三篇章：情感镜像与宿命牵引推演</h4>
+                <p class="indent-8 mb-4">情感不仅是起伏，更是电磁波的同频。<strong>${name}</strong> 的号码中，${stats["六煞"] > 0 ? '“六煞”能量显著，赋予您细腻的感知力，但也容易导致情感内耗。' : '情感场域呈现理性守恒状态。处理关系边界清晰，虽少浪漫冲动，但多长久契约精神。'}</p>
+                <p class="indent-8 mb-4">若有“五鬼”，情感可能面临挑战。正如建议阿盛的那样：与 <strong>MONEY</strong>（狸花猫）的互动是极佳的磁场净化。宠物的频率能带走杂讯，协助您回归初心。</p>
+            </section>`;
+
+            content += `<section>
+                <h4 class="text-2xl font-bold text-indigo-900 border-l-8 border-indigo-600 pl-4 mb-6">第四篇章：生理机能与生物能量预警</h4>
+                <ul class="list-disc pl-10 space-y-4 mb-6">
+                    <li><strong>呼吸与免疫</strong>：${stats["祸害"] > 0 ? '祸害能量导致呼吸道较脆弱。建议定期清理环境。' : '机能尚可，但需警惕过度劳累。'}</li>
+                    <li><strong>心脑负载</strong>：${stats["五鬼"] + stats["绝命"] > 2 ? '高脑力活动和熬夜会导致神经高压，易引发偏头痛。' : '能量分布均匀，请守护好睡眠补给线。'}</li>
+                </ul>
+                <p class="indent-8 mb-4">阿盛请注意：最有效的调理是“环境切换”。每日与 <strong>MONEY</strong> 的静处，能有效将负面电子导向大地。</p>
+            </section>`;
+
+            content += `<section>
+                <h4 class="text-2xl font-bold text-indigo-900 border-l-8 border-indigo-600 pl-4 mb-6">第五篇章：至尊资产配置与财富锚点</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-indigo-50 p-6 rounded-2xl border-l-4 border-indigo-400">
+                        <p class="font-bold text-indigo-800 mb-2">● 稳固资产 (60%)</p>
+                        <p class="text-sm">利用伏位与天医，布局低波动资产（如定期、黄金）。</p>
+                    </div>
+                    <div class="bg-amber-50 p-6 rounded-2xl border-l-4 border-amber-400">
+                        <p class="font-bold text-amber-800 mb-2">● 攻坚资产 (30%)</p>
+                        <p class="text-sm">利用生气磁场的贵人信息流参与核心赛道（如科技、新兴）。</p>
+                    </div>
+                </div>
+                <p class="indent-8 mb-4"><strong>风控：</strong>严禁在情绪极点操作。建议阿盛设定“24小时冷却期”。</p>
+            </section>`;
+
+            content += `<section class="text-center pt-10">
+                <p class="text-indigo-600 font-bold text-xl">祝 ${name} 与 MONEY 财富圆满 · 诸事大吉</p>
+                <p class="text-xs text-slate-300 mt-2 italic">全维度推演：约 1800 字</p>
+            </section></div>`;
+
+            reportDiv.innerHTML = content;
+        }
+
+        function shareToWhatsApp() {
+            const name = document.getElementById('nameInput').value.trim() || "测算者";
+            const soul = document.getElementById('soulNumber').innerText;
+            const phone = document.getElementById('phoneInput').value;
+            const text = `🔮 【${name} 的大师深度灵数报告】\n\n手机：${phone}\n能量核心：${soul}号\n\n📜 报告精华：\n该号码财库旺盛，利于积累。建议采取 6:3:1 投资策略。更多详述请咨询阿盛。祝万事胜意！`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function shareToEmail() {
+            const name = document.getElementById('nameInput').value.trim() || "测算者";
+            const email = document.getElementById('emailInput').value.trim();
+            const soulNum = document.getElementById('soulNumber').innerText;
+            const phone = document.getElementById('phoneInput').value;
+            
+            if (!email) {
+                showModal('阿盛提示：请先填写 Email 地址。');
+                return;
+            }
+
+            const subject = `🔮 ${name} 的 1800 字至尊灵数推演报告`;
+            const body = `尊敬的 ${name}：\n\n您的号码 (${phone}) 深度推演已经生成！\n核心内核：${soulNum}号\n\n建议：稳扎稳打，守护天医财星。多与 MONEY 互动舒缓压力。\n\n完整详述请见附件或测算页面。祝大吉大利！`;
+            window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+    </script>
 </body>
 </html>
