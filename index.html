@@ -27,9 +27,9 @@
         .report-section {
             background: #fff;
             border: 1px dashed #cbd5e1;
-            padding: 3rem;
-            border-radius: 2rem;
-            line-height: 2.2;
+            padding: 3.5rem;
+            border-radius: 2.5rem;
+            line-height: 2.4;
             color: #1e293b;
             font-size: 1rem;
             text-align: justify;
@@ -45,7 +45,7 @@
         .brief-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 1rem;
+            gap: 1.25rem;
         }
         #msgModal {
             display: none;
@@ -69,7 +69,7 @@
             }
             .glass-card { box-shadow: none !important; border: none !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
             .report-section { border: 1px solid #eee !important; page-break-inside: auto; }
-            section { page-break-inside: avoid; margin-bottom: 2rem; }
+            section { page-break-inside: avoid; margin-bottom: 2.5rem; }
             h1, h2, h3 { color: black !important; }
         }
     </style>
@@ -78,19 +78,19 @@
 
     <div id="msgModal" class="bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl flex items-center space-x-3">
         <span id="modalText"></span>
-        <button onclick="hideModal()" class="text-amber-400 font-bold ml-2">明白</button>
+        <button onclick="hideModal()" class="text-amber-400 font-bold ml-2">收到</button>
     </div>
 
     <div class="max-w-6xl w-full glass-card p-6 md:p-12 my-4">
         <div class="text-center mb-10 no-print">
             <h1 class="text-4xl font-extrabold text-slate-800 mb-3 tracking-tight">🔮 八星灵数：1800字至尊报告</h1>
-            <p class="text-slate-500 text-lg">全维度推演人生财库、情感宿命、健康预警及投资蓝图</p>
+            <p class="text-slate-500 text-lg">基于时空波动算法的全维度生命蓝图推演</p>
         </div>
 
-        <!-- Input Section (Hidden in Print) -->
+        <!-- Input Section -->
         <div class="bg-white p-8 rounded-3xl mb-10 border border-slate-200 shadow-inner no-print">
-            <div class="max-w-3xl mx-auto space-y-5">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="max-w-4xl mx-auto space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                         <label class="block text-sm font-semibold text-slate-600 mb-2">姓名 / 昵称</label>
                         <input type="text" id="nameInput" 
@@ -106,37 +106,35 @@
                             maxlength="11">
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-2">电子邮箱</label>
+                        <label class="block text-sm font-semibold text-slate-600 mb-2">电子邮箱 (选填)</label>
                         <input type="email" id="emailInput" 
                             class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:border-indigo-500 outline-none transition-all"
                             placeholder="your@email.com">
                     </div>
                 </div>
                 <button onclick="analyzeAll()" 
-                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl transition-all shadow-xl active:scale-95">
-                    立即开启 1800 字深度人生推演
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-5 rounded-2xl transition-all shadow-xl active:scale-95 text-lg">
+                    开启深度报告 (Deep Insight Report)
                 </button>
             </div>
         </div>
 
-        <div id="resultArea" class="hidden space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div id="resultArea" class="hidden space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
             
-            <div class="text-center border-b pb-6">
-                <h2 id="reportMainTitle" class="text-3xl font-bold text-slate-800 tracking-tight">测算报告加载中...</h2>
+            <div class="text-center border-b pb-8">
+                <h2 id="reportMainTitle" class="text-3xl font-bold text-slate-800 tracking-tight"></h2>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                <!-- Soul Card -->
                 <div class="bg-indigo-600 text-white p-8 rounded-3xl text-center flex flex-col justify-center shadow-2xl">
-                    <p class="text-indigo-200 text-xs font-bold uppercase tracking-widest mb-2">生命内核灵数</p>
+                    <p class="text-indigo-200 text-xs font-bold uppercase tracking-widest mb-2">核心灵数内核</p>
                     <div id="soulNumber" class="text-8xl font-black">0</div>
-                    <div id="numberTag" class="mt-4 font-bold bg-white/20 rounded-full py-2 text-md">加载中</div>
+                    <div id="numberTag" class="mt-4 font-bold bg-white/20 rounded-full py-2 text-md tracking-widest"></div>
                 </div>
 
-                <!-- Briefing Dashboard -->
                 <div class="lg:col-span-3 bg-white border border-slate-100 p-8 rounded-3xl shadow-sm">
                     <h3 class="font-bold text-slate-800 text-xl mb-6 flex items-center">
-                        <span class="mr-3 text-indigo-500">📊</span> 八星能量实时简报
+                        <span class="mr-3 text-indigo-500">📊</span> 八星能量看板 (Dashboard)
                     </h3>
                     <div id="starBriefing" class="brief-grid mb-6"></div>
                     <div id="starSequence" class="flex flex-wrap gap-2 mt-6 border-t pt-6"></div>
@@ -144,30 +142,18 @@
             </div>
 
             <div class="space-y-8">
-                <!-- Action Buttons (Hidden in Print) -->
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 px-4">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 px-4 no-print">
                     <h3 class="text-2xl font-bold text-slate-800 flex items-center">
-                        <span class="mr-3 text-indigo-600">📜</span> 1800字至尊生命蓝图报告
+                        <span class="mr-3 text-indigo-600">📜</span> 深度生命蓝图详述
                     </h3>
-                    <div class="flex flex-wrap gap-3 no-print">
-                        <button onclick="shareToWhatsApp()" class="whatsapp-btn text-white px-5 py-2.5 rounded-xl font-bold flex items-center shadow-lg active:scale-95">
-                            WhatsApp
-                        </button>
-                        <button onclick="shareToEmail()" class="email-btn text-white px-5 py-2.5 rounded-xl font-bold flex items-center shadow-lg active:scale-95">
-                            邮件
-                        </button>
-                        <button onclick="window.print()" class="print-btn text-white px-5 py-2.5 rounded-xl font-bold flex items-center shadow-lg active:scale-95">
-                            打印报告
-                        </button>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="shareToWhatsApp()" class="whatsapp-btn text-white px-5 py-2.5 rounded-xl font-bold shadow-lg">WhatsApp</button>
+                        <button onclick="shareToEmail()" class="email-btn text-white px-5 py-2.5 rounded-xl font-bold shadow-lg">邮件报告</button>
+                        <button onclick="window.print()" class="print-btn text-white px-5 py-2.5 rounded-xl font-bold shadow-lg">打印 PDF</button>
                     </div>
                 </div>
-                <!-- Report Content -->
-                <div id="masterReport" class="report-section shadow-xl border-slate-100"></div>
+                <div id="masterReport" class="report-section shadow-2xl border-slate-50"></div>
             </div>
-        </div>
-
-        <div class="mt-16 text-center text-xs text-slate-400 border-t pt-8 no-print">
-            <p>※ 建议 <strong>阿盛</strong> 多利用灵数优势进行决策。祝 <strong>MONEY</strong> 每天都有美味罐罐！</p>
         </div>
     </div>
 
@@ -184,18 +170,18 @@
         };
 
         const lifePathData = {
-            1: "开拓型", 2: "协调型", 3: "表达型", 4: "务实型", 5: "自由型", 6: "奉献型", 7: "探求型", 8: "成就型", 9: "利他型"
+            1: "开拓型内核", 2: "协调型内核", 3: "表达型内核", 4: "务实型内核", 5: "变革型内核", 6: "守护型内核", 7: "智思型内核", 8: "成就型内核", 9: "利他型内核"
         };
 
         const starMeta = {
-            "天医": { type: "aus", label: "财运/正缘" },
-            "延年": { type: "aus", label: "事业/能力" },
-            "生气": { type: "aus", label: "贵人/乐天" },
-            "伏位": { type: "aus", label: "守成/等待" },
-            "绝命": { type: "inaus", label: "冒险/耗损" },
-            "五鬼": { type: "inaus", label: "变动/疑虑" },
-            "六煞": { type: "inaus", label: "情感/桃花" },
-            "祸害": { type: "inaus", label: "口舌/健康" }
+            "天医": { type: "aus", label: "财运/正缘", color: "text-emerald-600" },
+            "延年": { type: "aus", label: "事业/能力", color: "text-blue-600" },
+            "生气": { type: "aus", label: "贵人/乐天", color: "text-green-600" },
+            "伏位": { type: "aus", label: "守成/等待", color: "text-teal-600" },
+            "绝命": { type: "inaus", label: "冒险/损耗", color: "text-rose-600" },
+            "五鬼": { type: "inaus", label: "变动/疑虑", color: "text-purple-600" },
+            "六煞": { type: "inaus", label: "情感/桃花", color: "text-pink-600" },
+            "祸害": { type: "inaus", label: "口舌/健康", color: "text-orange-600" }
         };
 
         function showModal(text) {
@@ -212,7 +198,7 @@
             const digits = phoneInput.replace(/\D/g, '');
             
             if (digits.length < 10 || digits.length > 11) {
-                showModal('阿盛提示：请填写 10 或 11 位号码进行推算。');
+                showModal('阿盛提示：请填写 10 或 11 位号码，大师才能算得准！');
                 return;
             }
 
@@ -237,7 +223,7 @@
 
         function displayResults(name, soulNum, sequence, stats, fullNum) {
             document.getElementById('resultArea').classList.remove('hidden');
-            document.getElementById('reportMainTitle').innerText = `${name} 的生命能量深度解析蓝图`;
+            document.getElementById('reportMainTitle').innerText = `【至尊深度报告】${name} 的全维度生命能量蓝图`;
             document.getElementById('soulNumber').innerText = soulNum;
             document.getElementById('numberTag').innerText = lifePathData[soulNum];
             
@@ -257,7 +243,7 @@
             });
 
             const seqDiv = document.getElementById('starSequence');
-            seqDiv.innerHTML = '<p class="w-full text-[10px] text-slate-400 mb-3 font-bold uppercase tracking-widest">号码内部能量脉络:</p>';
+            seqDiv.innerHTML = '<p class="w-full text-[10px] text-slate-400 mb-3 font-bold uppercase tracking-widest">号码核心磁场链 (Magnetic Chain):</p>';
             sequence.forEach(item => {
                 const span = document.createElement('span');
                 const isAus = starMeta[item.name].type === "aus";
@@ -275,79 +261,108 @@
             const ausTotal = stats["天医"] + stats["延年"] + stats["生气"] + stats["伏位"];
             const inausTotal = stats["绝命"] + stats["五鬼"] + stats["六煞"] + stats["祸害"];
             
-            let content = `<div class="space-y-8 text-slate-700">`;
+            let content = `<div class="space-y-12">`;
             
+            // 第一章节：深度灵魂分析 (Expanded to ~350 words)
             content += `<section>
-                <h4 class="text-2xl font-bold text-indigo-900 border-l-8 border-indigo-600 pl-4 mb-6">第一篇章：灵魂本色与时空锚点</h4>
-                <p class="indent-8 mb-4">在数字能量学的至尊体系中，每一个数字序列都是宇宙微弱振动在物质维度的投射。针对 <strong>${name}</strong> 的号码 ${fullNum} 进行的深度磁场剥离显示，您的生命频率锚定在 <strong>${soulNum} 号“${lifePathData[soulNum]}”</strong> 上。</p>
-                <p class="indent-8 mb-4">意味着 <strong>${name}</strong> 无论外界环境如何变迁，灵魂底层逻辑始终遵循一种${soulNum % 2 === 0 ? '极具韧性、注重逻辑' : '极具爆发力、敢于突破边界'}的模式。目前处于“${ausTotal >= inausTotal ? '正向累加' : '剧烈重塑'}”阶段。即使有凶星，您的灵魂底色也能通过理性的重组转危为安。阿盛请记住：意志才是您的导航仪。</p>
+                <h4 class="text-2xl font-black text-indigo-900 border-l-[12px] border-indigo-600 pl-5 mb-8">第一章：灵魂底色与先天灵性频率</h4>
+                <p class="indent-10 mb-6">数字不仅是计量的单位，更是宇宙能量在三维空间中振动的特定频率。针对 <strong>${name}</strong> 的专属号码 ${fullNum} 进行的至尊级磁场剥离显示，您的先天灵魂内核被锁定在 <strong>${soulNum} 号“${lifePathData[soulNum]}”</strong> 的高阶相位上。这一核心数字代表了 <strong>${name}</strong> 生命剧本的最底层逻辑：它决定了您在极端压力下的第一本能反应，以及您在追求人生终极目标时的核心动力源。</p>
+                <p class="indent-10 mb-6">解析显示，这一 ${soulNum} 号内核展现出一种${soulNum % 2 === 0 ? '极具深度的守恒与平衡之美。这意味着您在处理错综复杂的人际与金钱关系时，天生具备一种“缓冲器”的特质，能够通过逻辑的推演将剧烈的矛盾转化为有序的合作。' : '极具张力的爆发与开创之美。这预示着您生命中隐藏着突破阶层固化的天然野心，您的磁场往往在“破旧立新”的瞬间能释放出惊人的创造性频率。'}然而，核心内核必须与外部号码磁场达成共振。目前来看，您的场域正处于“${ausTotal >= inausTotal ? '黄金扩张期' : '深层重构期'}”。在这种状态下，您的每一个细微决定都会被放大。阿盛请记住：作为生命的主理人，您的意志才是调配这些数字能量的最高统帅，而非被动接受命运的拨弄。</p>
+                <p class="indent-10 mb-4">从宏观能量分布来看，吉星磁场与凶星磁场的比例为 ${ausTotal}:${inausTotal}。这是一个极具参考价值的比例，它揭示了 <strong>${name}</strong> 目前生命剧场中的“阻力与推力”对比。在未来的流年运势中，这一比例将直接影响您对外部机会的捕捉效率。</p>
             </section>`;
 
+            // 第二章节：财运与财富裂变 (Expanded to ~450 words)
             content += `<section>
-                <h4 class="text-2xl font-bold text-indigo-900 border-l-8 border-indigo-600 pl-4 mb-6">第二篇章：财库推演与事业裂变逻辑</h4>
-                <p class="indent-8 mb-4">财富不仅是数字，更是频率的共振。<strong>${name}</strong> 拥有 <strong>${stats["天医"]}</strong> 组天医财星。这意味着财富的获取依赖于您的直觉与对信息流的掌控。</p>
-                <p class="indent-8 mb-4">事业格属于“${stats["延年"] > 0 ? '将帅级' : '奇策级'}”。${stats["延年"] > 0 ? '延年能量赋予您极强的专业素养，财富积累具有延续性。' : '由于缺乏强延年阵，财富流向偏向爆发式。必须建立强制储蓄，否则财来财去易成幻象。'} 对于阿盛而言，最佳变现逻辑是利用“生气”磁场整合资源，再用“天医”精准收割。 </p>
+                <h4 class="text-2xl font-black text-indigo-900 border-l-[12px] border-indigo-600 pl-5 mb-8">第二章：财富罗盘、财库推演与裂变契机</h4>
+                <p class="indent-10 mb-6">在八星灵数财富体系中，财富的质量远比数量更重要。针对 <strong>${name}</strong> 的推演发现，号码中嵌入了 <strong>${stats["天医"]}</strong> 组天医财星。天医代表的是大财、正财、甚至是能够跨越时代的资产增值能力。这意味着 <strong>${name}</strong> 并不缺乏捕捉金钱信息的嗅觉，相反，您往往能在纷乱的市场噪音中，凭借一种近乎直觉的灵感抓取到最高质量的商业契机。但问题在于，财星的排列位置决定了“财库”是封死还是漏风。如果天医出现在前段，那代表早年财源广进但守财不易；若出现在末尾，则预示晚年财库丰盈。</p>
+                <p class="indent-10 mb-6">与此同时，我们必须审视“延年”磁场的作用。延年是财富的守护神，也是专业能力的代名词。${stats["延年"] > 0 ? '解析显示，您的事业场域具备极强的“将领特质”。延年能量的加持让 <strong>${name}</strong> 在职场中具备不可替代的专业威信，您的财富积累是基于价值创造的逻辑，而非博弈式的运气。这种财富稳健且具延续性。' : '由于号码中缺乏显性的强延年阵，<strong>${name}</strong> 的财富增长呈现出一种“跳跃式”特征。您可能在某些时段突然获得爆发式收益，但由于守财磁场偏弱，资产极易在不经意间流失。这暗示阿盛必须建立一套严格的“强制资产沉淀”系统，将流动资金转化为不可轻易变现的长期资产（如黄金或核心不动产）。'} </p>
+                <p class="indent-10 mb-6">针对目前的财库结构，大师给出如下裂变策略：利用“生气”磁场所带来的高端人脉资源（贵人财）进行前期的资源对焦，再利用“天医”磁场进行精准收割。注意，如果您的号码中“绝命”与“天医”形成了相邻组合，这预示着一种“高空行走”的激进模式——虽然收益极具诱惑力，但一旦发生回撤，可能会波及本金，务必警惕一切形式的过度杠杆操作。</p>
+                <p class="indent-10 mb-4">总结 <strong>${name}</strong> 的理财哲学：顺境时利用延年守城，逆境时利用生气突围。财富的本质是能量的剩余，只有当您的生命频率处于高光时刻，这些数字才会真正为您工作。</p>
             </section>`;
 
+            // 第三章节：情感宿命与人际能量 (Expanded to ~350 words)
             content += `<section>
-                <h4 class="text-2xl font-bold text-indigo-900 border-l-8 border-indigo-600 pl-4 mb-6">第三篇章：情感镜像与宿命牵引推演</h4>
-                <p class="indent-8 mb-4">情感不仅是起伏，更是电磁波的同频。<strong>${name}</strong> 的号码中，${stats["六煞"] > 0 ? '“六煞”能量显著，赋予您细腻的感知力，但也容易导致情感内耗。' : '情感场域呈现理性守恒状态。处理关系边界清晰，虽少浪漫冲动，但多长久契约精神。'}</p>
-                <p class="indent-8 mb-4">若有“五鬼”，情感可能面临挑战。正如建议阿盛的那样：与 <strong>MONEY</strong>（狸花猫）的互动是极佳的磁场净化。宠物的频率能带走杂讯，协助您回归初心。</p>
+                <h4 class="text-2xl font-black text-indigo-900 border-l-[12px] border-indigo-600 pl-5 mb-8">第三章：情感镜像、亲密关系与宿命牵引</h4>
+                <p class="indent-10 mb-6">情感不仅是心理的投射，更是生物电磁波的相互吸引。在 <strong>${name}</strong> 的号码矩阵中，${stats["六煞"] > 0 ? '“六煞”磁场释放出的信号异常清晰。六煞主细腻、主美感、也主偏桃花与情感纠结。这赋予了 <strong>${name}</strong> 在人际交往中极强的共情能力和亲和力，您能轻而易举地读懂他人的微表情和潜台词。这种天赋让您在社交中如鱼得水，但在亲密关系中，却容易让您陷入“过度解读”的泥潭。' : '情感能量场呈现出一种理性守恒的状态。这意味着 <strong>${name}</strong> 在处理感情问题时更看重契约感和实际的相处边界，虽然少了一些戏剧性的起伏，但却为生命筑起了一道坚实的稳定防线。'}</p>
+                <p class="indent-10 mb-6">如果 <strong>${name}</strong> 的磁场中出现了“五鬼”或“祸害”数组，那么在未来的十二个朔望月中，情感交流可能会面临“词不达意”或“突发性信任波动”的挑战。化解这些负向信号的最有效手段并非争论，而是能量的转移与中和。正如我们一直建议阿盛的那样：与 <strong>MONEY</strong>（那只活泼的公狸花猫）建立更深层的互动。在量子能量层面，公猫具备一种极强的平衡性磁场，MONEY 身上纯净、无条件的爱是最好的能量过滤器，它能帮您带走在外部职场积累的戾气和杂乱电波。多摸摸它的额头，这种触觉反馈能激活您的生命灵数 ${soulNum} 的自愈潜能。</p>
+                <p class="indent-10 mb-4">对于处于稳定关系中的 <strong>${name}</strong>，请记住：家里的厨房是天医财位的延伸。增加在家庭内部的共同互动，能有效压制号码中可能存在的六煞或祸害干扰。爱是最高频的能量，它能瞬间重塑任何凶星的轨迹。</p>
             </section>`;
 
+            // 第四章节：健康、生物钟与能量修复 (Expanded to ~350 words)
             content += `<section>
-                <h4 class="text-2xl font-bold text-indigo-900 border-l-8 border-indigo-600 pl-4 mb-6">第四篇章：生理机能与生物能量预警</h4>
-                <ul class="list-disc pl-10 space-y-4 mb-6">
-                    <li><strong>呼吸与免疫</strong>：${stats["祸害"] > 0 ? '祸害能量导致呼吸道较脆弱。建议定期清理环境。' : '机能尚可，但需警惕过度劳累。'}</li>
-                    <li><strong>心脑负载</strong>：${stats["五鬼"] + stats["绝命"] > 2 ? '高脑力活动和熬夜会导致神经高压，易引发偏头痛。' : '能量分布均匀，请守护好睡眠补给线。'}</li>
-                </ul>
-                <p class="indent-8 mb-4">阿盛请注意：最有效的调理是“环境切换”。每日与 <strong>MONEY</strong> 的静处，能有效将负面电子导向大地。</p>
-            </section>`;
-
-            content += `<section>
-                <h4 class="text-2xl font-bold text-indigo-900 border-l-8 border-indigo-600 pl-4 mb-6">第五篇章：至尊资产配置与财富锚点</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div class="bg-indigo-50 p-6 rounded-2xl border-l-4 border-indigo-400">
-                        <p class="font-bold text-indigo-800 mb-2">● 稳固资产 (60%)</p>
-                        <p class="text-sm">利用伏位与天医，布局低波动资产（如定期、黄金）。</p>
+                <h4 class="text-2xl font-black text-indigo-900 border-l-[12px] border-indigo-600 pl-5 mb-8">第四章：生理容器、生命能量损耗与修复计划</h4>
+                <p class="indent-10 mb-6">身体是承载灵魂与财富的唯一容器。根据号码 ${fullNum} 的推演，<strong>${name}</strong> 的生命能量损耗点主要集中在以下三个维度：</p>
+                <div class="space-y-6 mb-8">
+                    <div class="bg-slate-50 p-6 rounded-3xl border-l-4 border-indigo-600 shadow-sm">
+                        <p class="font-bold text-slate-800 mb-2">1. 呼吸系统与免疫应答链 (祸害磁场风险)</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">${stats["祸害"] > 0 ? '号码中的祸害能量会导致您的呼吸道黏膜对外界刺激较为敏感。建议阿盛在换季或压力剧增时，重点关注咽喉、支气管的养护。同时，祸害也代表免疫力的季节性波动，务必保证水分的足量摄入。' : '整体呼吸机能尚处稳态，但需预防因长期室内伏案工作导致的氧供不足。建议保持环境的负离子浓度。'}</p>
                     </div>
-                    <div class="bg-amber-50 p-6 rounded-2xl border-l-4 border-amber-400">
-                        <p class="font-bold text-amber-800 mb-2">● 攻坚资产 (30%)</p>
-                        <p class="text-sm">利用生气磁场的贵人信息流参与核心赛道（如科技、新兴）。</p>
+                    <div class="bg-slate-50 p-6 rounded-3xl border-l-4 border-indigo-600 shadow-sm">
+                        <p class="font-bold text-slate-800 mb-2">2. 神经传导与深度睡眠质量 (五鬼/绝命磁场风险)</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">${stats["五鬼"] + stats["绝命"] > 2 ? '高密度的脑力运作和号码中的“不稳定”磁场导致您的自主神经系统长期处于高频警戒状态。这会导致睡眠深度不足，甚至产生偏头痛或早期的代谢紊乱。这本质上是您的精神能量在“空转”。' : '您的神经系统能量分布较为均匀，但需警惕电子设备蓝光对松果体的磁场干扰。建议睡前进行彻底的数字断连。'}</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-3xl border-l-4 border-indigo-600 shadow-sm">
+                        <p class="font-bold text-slate-800 mb-2">3. 情绪化代谢与肠道微生态 (六煞磁场风险)</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">您的肠胃功能与心情高度绑定。当 <strong>${name}</strong> 感到焦虑或压力时，六煞能量会优先攻击您的消化系统。建议保持饮食的规律性，尤其是晚餐的纯净度。</p>
                     </div>
                 </div>
-                <p class="indent-8 mb-4"><strong>风控：</strong>严禁在情绪极点操作。建议阿盛设定“24小时冷却期”。</p>
+                <p class="indent-10 mb-4">至尊调理方案：<strong>${name}</strong> 应当学会在每个周日的下午进行一次“磁场接地”。赤脚踏青，或者仅仅是与 <strong>MONEY</strong> 在阳光下静处一小时。猫的生命频率（Purr frequency）在 25-150 赫兹之间，这一频率能显著促进骨骼与软组织修复，并中和您体内堆积的静电负荷。这也是阿盛改运的最简单“物理外挂”。</p>
             </section>`;
 
-            content += `<section class="text-center pt-10">
-                <p class="text-indigo-600 font-bold text-xl">祝 ${name} 与 MONEY 财富圆满 · 诸事大吉</p>
-                <p class="text-xs text-slate-300 mt-2 italic">全维度推演：约 1800 字</p>
+            // 第五章节：投资组合与财富管理 (Expanded to ~200 words)
+            content += `<section>
+                <h4 class="text-2xl font-black text-indigo-900 border-l-[12px] border-indigo-600 pl-5 mb-8">第五章：至尊资产配置与财富安全锚点</h4>
+                <p class="indent-10 mb-6">针对 <strong>${name}</strong> 的磁场能量，我们定制了如下资产配置策略：</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-100 text-center">
+                        <p class="text-xs font-bold text-emerald-700 mb-2">稳固防线 (60%)</p>
+                        <p class="text-xs text-emerald-600 leading-relaxed">利用“伏位”锁定流动性，布局实物资产（如核心地段物业或贵金属）。</p>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 text-center">
+                        <p class="text-xs font-bold text-amber-700 mb-2">价值进取 (30%)</p>
+                        <p class="text-xs text-amber-600 leading-relaxed">利用“天医”灵感捕捉优质赛道，通过中长线持有锁定企业成长红利。</p>
+                    </div>
+                    <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 text-center">
+                        <p class="text-xs font-bold text-rose-700 mb-2">弹性博弈 (10%)</p>
+                        <p class="text-xs text-rose-600 leading-relaxed">仅用此比例参与高频交易或风险项目。即便受凶星冲击，也绝不动摇根本。</p>
+                    </div>
+                </div>
+                <p class="indent-10 mb-4"><strong>风险预警：</strong>如果 <strong>${name}</strong> 发觉近期睡眠质量下降，请立即停止一切重大财务决策。因为当人体能量不足时，凶星磁场的影响力会成倍增加，极易产生判断失误。</p>
+            </section>`;
+
+            // 总结部分
+            content += `<section class="text-center pt-12">
+                <p class="text-2xl font-black text-indigo-700 mb-2">祝 ${name} 与 MONEY 财富圆满 · 诸事大吉</p>
+                <p class="text-sm text-slate-400 italic">—— 数字能量实验室 (Expert Analysis Report) ——</p>
+                <p class="text-[10px] text-slate-300 mt-4 uppercase tracking-[0.3em]">Total Words: Approx 1800+ | All Rights Reserved for Castor & Money</p>
             </section></div>`;
 
             reportDiv.innerHTML = content;
         }
 
+        // WhatsApp Share
         function shareToWhatsApp() {
             const name = document.getElementById('nameInput').value.trim() || "测算者";
             const soul = document.getElementById('soulNumber').innerText;
             const phone = document.getElementById('phoneInput').value;
-            const text = `🔮 【${name} 的大师深度灵数报告】\n\n手机：${phone}\n能量核心：${soul}号\n\n📜 报告精华：\n该号码财库旺盛，利于积累。建议采取 6:3:1 投资策略。更多详述请咨询阿盛。祝万事胜意！`;
+            const text = `🔮 【${name} 的大师深度至尊灵数报告】\n\n手机号：${phone}\n能量核心：${soul}号\n\n📜 报告精华：\n该号码财库旺盛，天医磁场被激活。建议执行 6:3:1 投资策略，重点守卫财库。更多关于情感与健康的 1800 字深度解析，请咨询阿盛。祝万事胜意！`;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
+        // Email Share
         function shareToEmail() {
             const name = document.getElementById('nameInput').value.trim() || "测算者";
             const email = document.getElementById('emailInput').value.trim();
-            const soulNum = document.getElementById('soulNumber').innerText;
+            const soul = document.getElementById('soulNumber').innerText;
             const phone = document.getElementById('phoneInput').value;
             
             if (!email) {
-                showModal('阿盛提示：请先填写 Email 地址。');
+                showModal('阿盛提示：请先填入电子邮箱地址，以便发送 1800 字长篇报告摘要。');
                 return;
             }
 
-            const subject = `🔮 ${name} 的 1800 字至尊灵数推演报告`;
-            const body = `尊敬的 ${name}：\n\n您的号码 (${phone}) 深度推演已经生成！\n核心内核：${soulNum}号\n\n建议：稳扎稳打，守护天医财星。多与 MONEY 互动舒缓压力。\n\n完整详述请见附件或测算页面。祝大吉大利！`;
+            const subject = `🔮 ${name} 的 1800 字手机灵数至尊推演报告`;
+            const body = `尊敬的 ${name}：\n\n您的手机号 (${phone}) 深度推演报告已生成！\n\n核心内核：${soul}号\n【报告摘录】您的事业场域呈现天医扩张态势，但需警惕守财磁场。建议多与宠物 MONEY 互动以中和负面电磁波，这对您的呼吸系统与睡眠质量大有裨益。\n\n完整版详述请至测算页面查看或下载 PDF 存档。\n\n祝您财富圆满，万事大吉！\n\n—— 阿盛 数字能量实验室`;
             window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }
     </script>
