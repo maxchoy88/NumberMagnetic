@@ -3,386 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>数磁空间 | StarMagnet Pro</title>
+    <title>数磁空间 | 三位一体能量分析</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 2026 流行色盘：星空紫 + 香槟金 */
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #312e81 100%);
-            --card-glass: rgba(255, 255, 255, 0.95);
-            --primary: #6366f1; /* 靛蓝 */
-            --accent: #f59e0b; /* 金色 */
-            --ji-color: #059669; /* 翡翠绿 */
-            --xiong-color: #dc2626; /* 宝石红 */
-            --text-dark: #1e293b;
+            --gold: #d4af37; --dark: #0f172a; --glass: rgba(255, 255, 255, 0.95);
+            --ji: #10b981; --xiong: #ef4444;
         }
-
-        body {
-            font-family: 'Noto Sans SC', -apple-system, sans-serif;
-            background: var(--bg-gradient);
-            margin: 0;
-            padding: 0;
-            color: var(--text-dark);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* 顶部 Branding */
-        .brand-header {
-            width: 100%;
-            text-align: center;
-            padding: 25px 0;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-        .brand-header h1 { margin: 0; font-size: 24px; letter-spacing: 2px; font-weight: 700; }
-        .brand-header p { margin: 5px 0 0; font-size: 12px; opacity: 0.8; letter-spacing: 1px; }
-
-        /* 主容器 */
-        .container {
-            width: 90%;
-            max-width: 500px;
-            margin-bottom: 40px;
-        }
-
-        /* 毛玻璃卡片通用样式 */
-        .glass-card {
-            background: var(--card-glass);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            transition: transform 0.2s;
-        }
-
-        /* 输入区域 */
-        .input-group {
-            position: relative;
-        }
-        input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 18px;
-            text-align: center;
-            outline: none;
-            box-sizing: border-box;
-            background: #f8fafc;
-            transition: 0.3s;
-            color: #334155;
-            font-weight: bold;
-        }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
+        body { font-family: -apple-system, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); margin: 0; padding: 20px; color: #1e293b; min-height: 100vh; }
+        .container { max-width: 600px; margin: 0 auto; }
         
-        .btn-analyze {
-            width: 100%;
-            margin-top: 15px;
-            padding: 14px;
-            background: linear-gradient(90deg, #4f46e5, #7c3aed);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
-            transition: 0.3s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-analyze:active { transform: scale(0.98); }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { margin: 0; font-size: 26px; letter-spacing: 2px; color: var(--gold); }
 
-        /* 历史标签 */
-        .history-box {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-            justify-content: center;
-        }
-        .tag {
-            background: #f1f5f9;
-            color: #64748b;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .tag:hover { background: #e2e8f0; color: var(--primary); }
-
-        /* 结果区域动画 */
-        #resultArea {
-            display: none;
-            animation: slideUp 0.5s ease-out;
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* 图表区 */
-        .chart-wrapper {
-            position: relative;
-            height: 180px;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .score-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-        .score-val { font-size: 28px; font-weight: 800; color: var(--text-dark); }
-        .score-label { font-size: 12px; color: #64748b; }
-
-        /* 磁场列表条目 */
-        .star-item {
-            display: flex;
-            align-items: center;
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            border-left: 5px solid #ddd;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
-        .star-item.ji { border-left-color: var(--ji-color); background: #f0fdf4; }
-        .star-item.xiong { border-left-color: var(--xiong-color); background: #fef2f2; }
-
-        .num-pair {
-            font-family: monospace;
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--text-dark);
-            width: 50px;
-        }
-        .star-details { flex: 1; margin-left: 10px; }
-        .star-name {
-            font-size: 14px;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 4px;
-        }
-        .badge {
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            color: white;
-            vertical-align: middle;
-            margin-left: 5px;
-        }
-        .bg-ji { background: var(--ji-color); }
-        .bg-xiong { background: var(--xiong-color); }
-        .star-desc { font-size: 12px; color: #64748b; }
-
-        /* 页脚 */
-        footer {
-            margin-top: auto;
-            color: rgba(255,255,255,0.4);
-            font-size: 12px;
-            padding-bottom: 20px;
-            text-align: center;
-        }
+        .card { background: var(--glass); border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .label { font-size: 14px; font-weight: bold; color: #64748b; margin-bottom: 8px; display: block; }
         
-        .copy-btn {
-            background: transparent;
-            border: 1px dashed var(--primary);
-            color: var(--primary);
-            width: 100%;
-            padding: 10px;
-            border-radius: 10px;
-            margin-top: 10px;
-            cursor: pointer;
-            font-size: 13px;
-        }
+        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        input { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; box-sizing: border-box; font-size: 15px; }
+        .full-btn { width: 100%; padding: 15px; background: var(--gold); color: #000; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
+
+        /* 结果样式 */
+        .result-section { display: none; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .report-box { border-left: 4px solid var(--gold); padding-left: 15px; margin: 15px 0; }
+        .star-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
+        .type-tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; color: white; margin-left: 5px; }
+        
+        .score-circle { width: 80px; height: 80px; border-radius: 50%; border: 5px solid var(--gold); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 15px; }
+        .score-num { font-size: 24px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="brand-header">
-        <h1>✨ 灵数磁场空间</h1>
-        <p>Castor Lab Holding</p>
+<div class="container">
+    <div class="header">
+        <h1>✨ 数磁空间 Pro</h1>
+        <p>先天命格 · 后天磁场 · 综合运势</p>
     </div>
 
-    <div class="container">
-        <div class="glass-card">
-            <div class="input-group">
-                <input type="tel" id="inputNum" placeholder="输入手机 / 车牌号码" onkeypress="if(event.keyCode==13) analyze()">
-                <button class="btn-analyze" onclick="analyze()">
-                    <span>🔍 开始分析能量</span>
-                </button>
+    <div class="card">
+        <label class="label">🗓️ 先天：出生日期 (例: 19800930)</label>
+        <input type="tel" id="birthInput" placeholder="请输入8位生日" maxlength="8">
+        
+        <div class="input-row" style="margin-top:15px;">
+            <div>
+                <label class="label">📱 后天：手机号码</label>
+                <input type="tel" id="phoneInput" placeholder="主要手机号">
             </div>
-            <div id="historyBox" class="history-box"></div>
-        </div>
-
-        <div id="resultArea">
-            <div class="glass-card">
-                <div class="chart-wrapper">
-                    <canvas id="chartCanvas"></canvas>
-                    <div class="score-center">
-                        <div class="score-val" id="jiRate">--%</div>
-                        <div class="score-label">吉星占比</div>
-                    </div>
-                </div>
-                <div id="summaryText" style="text-align:center; font-size:14px; color:#475569; line-height:1.5;"></div>
-                <button class="copy-btn" onclick="copyResult()">📋 复制报告</button>
-            </div>
-
-            <div class="glass-card" style="padding: 15px; background: rgba(255,255,255,0.9);">
-                <h4 style="margin:0 0 15px 5px; color:#334155;">🔮 磁场共振详解</h4>
-                <div id="listArea"></div>
+            <div>
+                <label class="label">🚗 载体：车牌号码</label>
+                <input type="tel" id="carInput" placeholder="数字部分">
             </div>
         </div>
+        
+        <button class="full-btn" onclick="deepAnalyze()">开启深度能量分析</button>
     </div>
 
-    <footer>
-        Powered by NumMagnet V5.0
-    </footer>
+    <div id="resultArea" class="result-section">
+        <div class="card" style="text-align: center;">
+            <div class="score-circle">
+                <span class="score-num" id="totalScore">--</span>
+                <span style="font-size:10px;">契合度</span>
+            </div>
+            <div id="summaryText" style="font-size: 14px; line-height: 1.6;"></div>
+        </div>
 
-    <script>
-        const starDB = {
-            "天医": { p: ["13","31","68","86","49","94","27","72"], t: "ji", d: "正财 · 正缘 · 聪慧" },
-            "延年": { p: ["19","91","78","87","34","43","26","62"], t: "ji", d: "事业 · 领导 · 守财" },
-            "生气": { p: ["14","41","67","76","39","93","28","82"], t: "ji", d: "贵人 · 乐天 · 逢凶化吉" },
-            "伏位": { p: ["11","22","88","99","66","77","33","44"], t: "ji", d: "蓄势 · 平稳 · 思考" },
-            "绝命": { p: ["12","21","69","96","48","84","37","73"], t: "xiong", d: "冲动 · 投资 · 破财" },
-            "五鬼": { p: ["18","81","79","97","36","63","24","42"], t: "xiong", d: "变动 · 异地 · 血光" },
-            "六煞": { p: ["16","61","47","74","38","83","29","92"], t: "xiong", d: "桃花 · 郁闷 · 人际" },
-            "祸害": { p: ["17","71","89","98","46","64","23","32"], t: "xiong", d: "口舌 · 小人 · 疾病" }
-        };
+        <div class="card">
+            <h3 style="margin:0 0 15px 0; font-size:16px;">🔍 维度深度分析</h3>
+            <div id="dimAnalysis"></div>
+        </div>
+    </div>
+</div>
 
-        let myChart = null;
-        let reportText = "";
+<script>
+    const starMap = {
+        "天医": { p: ["13","31","68","86","49","94","27","72"], t: "ji", d: "财富/正缘", field: "财运" },
+        "延年": { p: ["19","91","78","87","34","43","26","62"], t: "ji", d: "能力/事业", field: "事业" },
+        "生气": { p: ["14","41","67","76","39","93","28","82"], t: "ji", d: "贵人/乐天", field: "贵人" },
+        "伏位": { p: ["11","22","88","99","66","77","33","44"], t: "ji", d: "蓄势/等待", field: "稳定" },
+        "绝命": { p: ["12","21","69","96","48","84","37","73"], t: "xiong", d: "偏激/投资", field: "风险" },
+        "五鬼": { p: ["18","81","79","97","36","63","24","42"], t: "xiong", d: "变动/血光", field: "变数" },
+        "六煞": { p: ["16","61","47","74","38","83","29","92"], t: "xiong", d: "偏桃花/抑郁", field: "人际" },
+        "祸害": { p: ["17","71","89","98","46","64","23","32"], t: "xiong", d: "口舌/小人", field: "健康" }
+    };
 
-        // 初始化历史记录
-        renderHistory();
+    function getPairs(num) {
+        let pairs = [];
+        let raw = num.toString().replace(/[^\d]/g,'');
+        for (let i = 0; i < raw.length - 1; i++) {
+            if (raw[i] === '0' || raw[i] === '5') continue;
+            let next = i + 1;
+            while(next < raw.length && (raw[next] === '0' || raw[next] === '5')) next++;
+            if (next < raw.length) pairs.push(raw[i] + raw[next]);
+        }
+        return pairs;
+    }
 
-        function analyze() {
-            const raw = document.getElementById('inputNum').value.replace(/[^\d]/g,'');
-            if(raw.length < 2) { alert("请输入完整号码"); return; }
-            
-            saveHistory(raw);
-            document.getElementById('resultArea').style.display = 'block';
+    function deepAnalyze() {
+        const birth = document.getElementById('birthInput').value;
+        const phone = document.getElementById('phoneInput').value;
+        const car = document.getElementById('carInput').value;
 
-            // 算法逻辑
-            let pairs = [];
-            let stats = { ji: 0, xiong: 0 };
+        if(!birth || !phone) { alert("生日和手机号是核心，请输入"); return; }
 
-            for(let i=0; i<raw.length-1; i++) {
-                if(raw[i] === '0' || raw[i] === '5') continue;
-                
-                let next = i + 1;
-                let note = "";
-                while(next < raw.length) {
-                    if(raw[next] === '0') note = " (隐)";
-                    else if(raw[next] === '5') note = " (强)";
-                    else break;
-                    next++;
-                }
+        document.getElementById('resultArea').style.display = 'block';
 
-                if(next < raw.length) {
-                    const p = raw[i] + raw[next];
-                    let star = "未知", info = { t:'none', d:'' };
-                    
-                    for(let k in starDB) {
-                        if(starDB[k].p.includes(p)) {
-                            star = k;
-                            info = starDB[k];
-                            info.t === 'ji' ? stats.ji++ : stats.xiong++;
-                            break;
-                        }
-                    }
-                    pairs.push({ num: raw.substring(i, next+1), star, info, note });
-                }
-            }
+        // 1. 先天命格
+        let birthPairs = getPairs(birth);
+        let birthStars = birthPairs.map(p => getStarInfo(p)).filter(x => x);
 
-            renderUI(pairs, stats, raw);
+        // 2. 手机磁场
+        let phonePairs = getPairs(phone);
+        let phoneStars = phonePairs.map(p => getStarInfo(p)).filter(x => x);
+
+        // 3. 车牌磁场
+        let carStars = car ? getPairs(car).map(p => getStarInfo(p)).filter(x => x) : [];
+
+        // 综合计算评分
+        let score = 80;
+        let advice = "";
+
+        // 逻辑：如果生日里缺财富(天医)，手机里有补，加分
+        const hasBirthWealth = birthStars.some(s => s.name === "天医");
+        const hasPhoneWealth = phoneStars.some(s => s.name === "天医");
+        
+        if(!hasBirthWealth && hasPhoneWealth) {
+            advice += "💡 先天财库较虚，幸好手机号补足了天医财尘，利于聚财。<br>";
+            score += 10;
+        } else if (hasBirthWealth && hasPhoneWealth) {
+            advice += "💰 先天带财且后天助运，财源广进，但需注意守财。<br>";
         }
 
-        function renderUI(pairs, stats, raw) {
-            // 渲染列表
-            const html = pairs.map(item => `
-                <div class="star-item ${item.info.t}">
-                    <div class="num-pair">${item.num}</div>
-                    <div class="star-details">
-                        <div>
-                            <span class="star-name" style="color:${item.info.t==='ji'?'#059669':'#dc2626'}">${item.star}</span>
-                            <span class="badge ${item.info.t==='ji'?'bg-ji':'bg-xiong'}">${item.info.t==='ji'?'吉':'凶'}</span>
-                        </div>
-                        <div class="star-desc">${item.info.d} ${item.note}</div>
-                    </div>
-                </div>
-            `).join('');
-            document.getElementById('listArea').innerHTML = html;
-
-            // 渲染图表
-            const total = stats.ji + stats.xiong;
-            const jiPercent = total === 0 ? 0 : Math.round((stats.ji / total) * 100);
-            document.getElementById('jiRate').innerText = jiPercent + "%";
-            
-            const ctx = document.getElementById('chartCanvas').getContext('2d');
-            if(myChart) myChart.destroy();
-            myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['吉星能量', '凶星能量'],
-                    datasets: [{
-                        data: [stats.ji, stats.xiong],
-                        backgroundColor: ['#10b981', '#ef4444'],
-                        borderWidth: 0,
-                        hoverOffset: 4
-                    }]
-                },
-                options: {
-                    cutout: '75%',
-                    plugins: { legend: { display: false } }
-                }
-            });
-
-            // 总结
-            const verdict = jiPercent >= 60 ? "🌟 这是一个 <strong>吉星高照</strong> 的号码，有助于稳步发展。" : "⚠️ 这是一个 <strong>充满挑战</strong> 的号码，需注意变动与风险。";
-            document.getElementById('summaryText').innerHTML = verdict;
-
-            // 准备报告文本
-            reportText = `【数磁分析】号码 ${raw}\n吉星占比：${jiPercent}%\n----------------\n${pairs.map(p=>`${p.num} ${p.star}: ${p.info.d}`).join('\n')}\n----------------\n(CFCYA 数字能量系统)`;
+        // 车牌安全检查
+        const hasCarDanger = carStars.some(s => s.name === "绝命" || s.name === "五鬼");
+        if(hasCarDanger) {
+            advice += "⚠️ 车牌中带有冲动或变动磁场，行车需格外注意安全，防剐蹭。<br>";
+            score -= 15;
         }
 
-        function copyResult() {
-            navigator.clipboard.writeText(reportText);
-            const btn = document.querySelector('.copy-btn');
-            const originalText = btn.innerText;
-            btn.innerText = "✅ 已复制";
-            setTimeout(() => btn.innerText = originalText, 1500);
-        }
+        document.getElementById('totalScore').innerText = score;
+        document.getElementById('summaryText').innerHTML = advice || "整体能量磁场平衡，属于平稳上升的命格。";
 
-        function saveHistory(num) {
-            let h = JSON.parse(localStorage.getItem('v5_hist') || '[]');
-            if(!h.includes(num)) {
-                h.unshift(num);
-                if(h.length > 5) h.pop();
-                localStorage.setItem('v5_hist', JSON.stringify(h));
-            }
-            renderHistory();
-        }
+        // 维度详情展示
+        renderDimensions(birthStars, phoneStars, carStars);
+    }
 
-        function renderHistory() {
-            const h = JSON.parse(localStorage.getItem('v5_hist') || '[]');
-            document.getElementById('historyBox').innerHTML = h.map(n => `
-                <span class="tag" onclick="document.getElementById('inputNum').value='${n}';analyze()">${n}</span>
-            `).join('');
+    function getStarInfo(pair) {
+        for (let name in starMap) {
+            if (starMap[name].p.includes(pair)) return { name, ...starMap[name] };
         }
-    </script>
+        return null;
+    }
+
+    function renderDimensions(b, p, c) {
+        const area = document.getElementById('dimAnalysis');
+        area.innerHTML = `
+            <div class="report-box">
+                <strong>先天命格 (生日)</strong><br>
+                ${b.length ? b.map(s => `<span class="star-item">${s.name} <small>${s.d}</small></span>`).join('') : '磁场较弱'}
+            </div>
+            <div class="report-box" style="border-color: #3b82f6;">
+                <strong>后天运势 (手机)</strong><br>
+                ${p.length ? p.map(s => `<span class="star-item">${s.name} <small>${s.d}</small></span>`).join('') : '磁场较弱'}
+            </div>
+            ${c.length ? `<div class="report-box" style="border-color: #10b981;"><strong>载体能量 (车牌)</strong><br>${c.map(s => `<span class="star-item">${s.name} <small>${s.d}</small></span>`).join('')}</div>` : ''}
+        `;
+    }
+</script>
+
 </body>
 </html>
