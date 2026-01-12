@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数磁空间 | 八星灵数在线分析</title>
+    <meta name="description" content="专业八星灵数分析工具，由 Castor 开发">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --accent: #f59e0b;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-sub: #6b7280;
+            --ji-color: #10b981;
+            --xiong-color: #ef4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 顶部导航栏 */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .brand {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+        .brand span { color: var(--text-main); }
+
+        /* 主容器 */
+        .main-container {
+            flex: 1;
+            max-width: 800px;
+            width: 95%;
+            margin: 2rem auto;
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        /* 卡片通用样式 */
+        .card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 头部欢迎区 */
+        .header-section {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, #4f46e5 0%, #818cf8 100%);
+            color: white;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+        .header-section h1 { margin: 0; font-size: 1.8rem; }
+        .header-section p { opacity: 0.9; margin-top: 0.5rem; font-size: 0.95rem; }
+
+        /* 输入区 */
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus { border-color: var(--primary); }
+        .btn-analyze {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 24px;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-analyze:hover { background-color: #4338ca; }
+
+        /* 结果区域布局 (Desktop: 左右布局, Mobile: 上下布局) */
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            display: none; /* 默认隐藏 */
+        }
+        @media (max-width: 768px) {
+            .result-grid { grid-template-columns: 1fr; }
+        }
+
+        /* 列表项样式 */
+        .star-list { display: flex; flex-direction: column; gap: 10px; }
+        .star-row {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 8px;
+            background: #f9fafb;
+            border-left: 4px solid transparent;
+        }
+        .star-row.ji { border-left-color: var(--ji-color); background: #ecfdf5; }
+        .star-row.xiong { border-left-color: var(--xiong-color); background: #fef2f2; }
+        
+        .num-badge {
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-right: 12px;
+            color: var(--text-main);
+        }
+        .star-name {
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: white;
+            margin-right: auto;
+        }
+        .bg-ji { background-color: var(--ji-color); }
+        .bg-xiong { background-color: var(--xiong-color); }
+        .star-desc { font-size: 0.8rem; color: var(--text-sub); }
+
+        /* 复制按钮 */
+        .copy-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .copy-btn:hover { background: #eef2ff; }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="brand">Num<span>Magnet</span></div>
+        <div style="font-size: 0.9rem; color: #6b7280;">Castor's Tool</div>
+    </nav>
+
+    <div class="main-container">
+        
+        <div class="header-section">
+            <h1>数磁空间</h1>
+            <p>输入手机号 / 车牌 / 球员号码，解析背后的能量磁场</p>
+        </div>
+
+        <div class="card">
+            <div class="input-wrapper">
+                <input type="text" id="phoneInput" placeholder="请输入号码 (如: 0123456789)" onkeypress="if(event.keyCode==13) analyze()">
+                <button class="btn-analyze" onclick="analyze()">立即分析</button>
+            </div>
+            <div id="history-tags" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+                </div>
+        </div>
+
+        <div id="resultArea" class="result-grid">
+            
+            <div class="card">
+                <h3 style="margin-top:0;">能量分布</h3>
+                <canvas id="energyChart" width="100%" height="60"></canvas>
+                <div id="summaryText" style="margin-top: 15px; line-height: 1.6; font-size: 0.95rem; color: var(--text-sub);"></div>
+                <button class="copy-btn" onclick="copyReport()">📋 复制分析报告给客户</button>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-top:0;">磁场详解</h3>
+                <div id="detailList" class="star-list"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 CFC Youth Academy & Castor Tech Lab.<br>
+        Powered by NumMagnet Algorithm V4.0
+    </footer>
+
+    <script>
+        // 核心数据
+        const starMap = {
+            "天医": { p: ["13","31","68","86","49","94","27","72"], t: "ji", d: "正财 / 正缘 / 聪明" },
+            "延年": { p: ["19","91","78","87","34","43","26","62"], t: "ji", d: "事业 / 领导 / 责任" },
+            "生气": { p: ["14","41","67","76","39","93","28","82"], t: "ji", d: "贵人 / 乐天 / 名气" },
+            "伏位": { p: ["11","22","88","99","66","77","33","44"], t: "ji", d: "蓄势 / 思考 / 平稳" },
+            "绝命": { p: ["12","21","69","96","48","84","37","73"], t: "xiong", d: "冲动 / 投资 / 破财" },
+            "五鬼": { p: ["18","81","79","97","36","63","24","42"], t: "xiong", d: "变动 / 才华 / 异地" },
+            "六煞": { p: ["16","61","47","74","38","83","29","92"], t: "xiong", d: "桃花 / 忧郁 / 人际" },
+            "祸害": { p: ["17","71","89","98","46","64","23","32"], t: "xiong", d: "口舌 / 疾病 / 小人" }
+        };
+
+        let chartInstance = null;
+        let lastReportText = "";
+
+        // 分析主函数
+        function analyze() {
+            const raw = document.getElementById('phoneInput').value.replace(/[^\d]/g,'');
+            if (raw.length < 2) { alert("请输入至少2位数字"); return; }
+            
+            document.getElementById('resultArea').style.display = 'grid';
+            saveHistory(raw);
+
+            // 算法核心
+            let pairs = [];
+            let stats = { ji: 0, xiong: 0 };
+            
+            for (let i = 0; i < raw.length - 1; i++) {
+                if (raw[i] === '0' || raw[i] === '5') continue;
+                
+                let nextIdx = i + 1;
+                let note = "";
+                while(nextIdx < raw.length) {
+                    if(raw[nextIdx] === '0') note += " [隐]";
+                    else if(raw[nextIdx] === '5') note += " [强]";
+                    else break;
+                    nextIdx++;
+                }
+
+                if (nextIdx < raw.length) {
+                    let p = raw[i] + raw[nextIdx];
+                    let star = "未知", info = {t:'none', d:''};
+                    
+                    for(let k in starMap) {
+                        if(starMap[k].p.includes(p)) {
+                            star = k;
+                            info = starMap[k];
+                            info.t === 'ji' ? stats.ji++ : stats.xiong++;
+                            break;
+                        }
+                    }
+                    pairs.push({ num: raw.substring(i, nextIdx+1), star, info, note });
+                }
+            }
+
+            renderUI(pairs, stats, raw);
+        }
+
+        // 渲染界面
+        function renderUI(pairs, stats, rawNum) {
+            // 1. 列表
+            const listDiv = document.getElementById('detailList');
+            listDiv.innerHTML = pairs.map(item => `
+                <div class="star-row ${item.info.t}">
+                    <span class="num-badge">${item.num}</span>
+                    <span class="star-name ${item.info.t === 'ji' ? 'bg-ji' : 'bg-xiong'}">${item.star}</span>
+                    <span class="star-desc">${item.info.d} ${item.note}</span>
+                </div>
+            `).join('');
+
+            // 2. 图表
+            const ctx = document.getElementById('energyChart').getContext('2d');
+            if(chartInstance) chartInstance.destroy();
+            chartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['吉星 (财运/事业/贵人)', '凶星 (变动/口舌/压力)'],
+                    datasets: [{
+                        data: [stats.ji, stats.xiong],
+                        backgroundColor: ['#10b981', '#ef4444'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { cutout: '75%', plugins: { legend: { position: 'bottom' } } }
+            });
+
+            // 3. 总结文案
+            const summary = `<strong>号码分析 (${rawNum})：</strong><br>
+            此号码包含 ${pairs.length} 组核心磁场。<br>
+            吉星占比 ${Math.round((stats.ji / (stats.ji+stats.xiong))*100)}%，
+            凶星占比 ${Math.round((stats.xiong / (stats.ji+stats.xiong))*100)}%。<br>
+            ${stats.ji > stats.xiong ? '整体能量偏正向，利于稳步发展。' : '整体能量波动较大，需注意大起大落。'}`;
+            
+            document.getElementById('summaryText').innerHTML = summary;
+            
+            // 准备纯文本报告供复制
+            lastReportText = `【数磁空间分析报告】\n号码：${rawNum}\n------------------\n${pairs.map(p => `${p.num} → ${p.star} (${p.info.d})`).join('\n')}\n------------------\n总评：${stats.ji > stats.xiong ? '吉星主导，运势平稳' : '凶星主导，注意风险'}\n(来自 Castor 的专业分析)`;
+        }
+
+        // 复制功能
+        function copyReport() {
+            navigator.clipboard.writeText(lastReportText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.innerHTML = "✅ 已复制！可去粘贴";
+                setTimeout(() => btn.innerHTML = "📋 复制分析报告给客户", 2000);
+            });
+        }
+
+        // 历史记录
+        function saveHistory(num) {
+            let h = JSON.parse(localStorage.getItem('web_hist') || '[]');
+            if(!h.includes(num)) {
+                h.unshift(num);
+                if(h.length > 5) h.pop();
+                localStorage.setItem('web_hist', JSON.stringify(h));
+            }
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const h = JSON.parse(localStorage.getItem('web_hist') || '[]');
+            const container = document.getElementById('history-tags');
+            container.innerHTML = h.map(n => `
+                <span onclick="document.getElementById('phoneInput').value='${n}';analyze()" 
+                      style="font-size:12px; padding:4px 10px; background:#e5e7eb; border-radius:15px; cursor:pointer;">
+                      ${n}
+                </span>
+            `).join('');
+        }
+        
+        // 初始加载历史
+        renderHistory();
+    </script>
+</body>
+</html>
