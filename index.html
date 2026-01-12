@@ -3,173 +3,385 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>数磁空间 | 三位一体能量分析</title>
+    <title>数磁空间 Pro | 深度能量分析</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --gold: #d4af37; --dark: #0f172a; --glass: rgba(255, 255, 255, 0.95);
-            --ji: #10b981; --xiong: #ef4444;
+            --gold: #f59e0b;
+            --gold-light: #fbbf24;
+            --dark-bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --ji: #10b981;
+            --xiong: #ef4444;
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
-        body { font-family: -apple-system, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); margin: 0; padding: 20px; color: #1e293b; min-height: 100vh; }
-        .container { max-width: 600px; margin: 0 auto; }
-        
-        .header { text-align: center; color: white; margin-bottom: 30px; }
-        .header h1 { margin: 0; font-size: 26px; letter-spacing: 2px; color: var(--gold); }
 
-        .card { background: var(--glass); border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-        .label { font-size: 14px; font-weight: bold; color: #64748b; margin-bottom: 8px; display: block; }
-        
-        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        input { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; box-sizing: border-box; font-size: 15px; }
-        .full-btn { width: 100%; padding: 15px; background: var(--gold); color: #000; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-        /* 结果样式 */
-        .result-section { display: none; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .report-box { border-left: 4px solid var(--gold); padding-left: 15px; margin: 15px 0; }
-        .star-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
-        .type-tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; color: white; margin-left: 5px; }
-        
-        .score-circle { width: 80px; height: 80px; border-radius: 50%; border: 5px solid var(--gold); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 15px; }
-        .score-num { font-size: 24px; font-weight: bold; }
+        body {
+            font-family: -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+            background: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        .container { max-width: 500px; margin: 0 auto; padding-bottom: 40px; }
+
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h1 { 
+            margin: 0; 
+            font-size: 28px; 
+            background: linear-gradient(to right, #fde68a, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+        .header p { color: var(--text-secondary); font-size: 14px; margin-top: 5px; }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .input-group { margin-bottom: 15px; }
+        .label {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: var(--gold-light);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #000;
+            border: none;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        #resultArea { display: none; animation: fadeIn 0.6s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .score-circle {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 6px solid var(--gold);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto 20px;
+            background: rgba(245, 158, 11, 0.05);
+        }
+        .score-num { font-size: 40px; font-weight: 900; color: var(--gold); }
+
+        .section-title {
+            font-size: 16px;
+            color: var(--gold);
+            margin: 20px 0 10px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 5px;
+        }
+
+        .advice-item {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            border-left: 3px solid var(--gold-light);
+        }
+        .advice-item b { color: var(--gold-light); }
+
+        .star-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            margin: 2px;
+            background: rgba(255,255,255,0.1);
+        }
+        .tag-ji { color: var(--ji); border: 1px solid var(--ji); }
+        .tag-xiong { color: var(--xiong); border: 1px solid var(--xiong); }
+
+        .special-tip {
+            background: linear-gradient(45deg, rgba(245,158,11,0.1), rgba(16,185,129,0.1));
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: center;
+            border: 1px dashed var(--gold);
+        }
+
+        #toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: none;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
 
+<div id="toast"></div>
+
 <div class="container">
     <div class="header">
         <h1>✨ 数磁空间 Pro</h1>
-        <p>先天命格 · 后天磁场 · 综合运势</p>
+        <p>Hi 阿盛 (Castor)，开启您的专属能量罗盘</p>
     </div>
 
     <div class="card">
-        <label class="label">🗓️ 先天：出生日期 (例: 19800930)</label>
-        <input type="tel" id="birthInput" placeholder="请输入8位生日" maxlength="8">
-        
-        <div class="input-row" style="margin-top:15px;">
-            <div>
-                <label class="label">📱 后天：手机号码</label>
-                <input type="tel" id="phoneInput" placeholder="主要手机号">
-            </div>
-            <div>
-                <label class="label">🚗 载体：车牌号码</label>
-                <input type="tel" id="carInput" placeholder="数字部分">
-            </div>
+        <div class="input-group">
+            <label class="label">📅 先天命格 (出生日期)</label>
+            <input type="tel" id="birthInput" placeholder="19900520" maxlength="8">
         </div>
-        
-        <button class="full-btn" onclick="deepAnalyze()">开启深度能量分析</button>
+        <div class="input-group">
+            <label class="label">📱 后天磁场 (手机号码)</label>
+            <input type="tel" id="phoneInput" placeholder="11位常用手机号" maxlength="11">
+        </div>
+        <div class="input-group">
+            <label class="label">🚗 载体能量 (车牌号码)</label>
+            <input type="text" id="carInput" placeholder="仅输入数字部分">
+        </div>
+        <button class="analyze-btn" onclick="runProAnalysis()">深度分析运势</button>
     </div>
 
-    <div id="resultArea" class="result-section">
+    <div id="resultArea">
         <div class="card" style="text-align: center;">
             <div class="score-circle">
-                <span class="score-num" id="totalScore">--</span>
-                <span style="font-size:10px;">契合度</span>
+                <span class="score-num" id="totalScore">0</span>
+                <span style="font-size:12px; color:var(--text-secondary)">契合指数</span>
             </div>
-            <div id="summaryText" style="font-size: 14px; line-height: 1.6;"></div>
+            <p id="mainSummary" style="font-size:15px; font-weight: 500;"></p>
         </div>
 
         <div class="card">
-            <h3 style="margin:0 0 15px 0; font-size:16px;">🔍 维度深度分析</h3>
-            <div id="dimAnalysis"></div>
+            <div class="section-title">📊 能量维度分布</div>
+            <div style="height: 250px;">
+                <canvas id="proChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">🔍 组合深度解析</div>
+            <div id="combinationAdvice"></div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">💡 专属生活建议</div>
+            <div id="lifeAdvice"></div>
+            
+            <!-- 特别彩蛋：财富守护 -->
+            <div class="special-tip">
+                <div style="font-size: 20px; margin-bottom: 5px;">🐾</div>
+                <div style="font-size: 13px; color: var(--gold-light); font-weight: bold;">财富守护者：MONEY</div>
+                <p style="font-size: 12px; margin: 5px 0 0; color: var(--text-secondary);">
+                    Castor, 您的爱宠“MONEY”带有天然的治愈与招财磁场。<br>
+                    每当感到磁场混乱时，与它相处15分钟可快速校准个人能量位。
+                </p>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
     const starMap = {
-        "天医": { p: ["13","31","68","86","49","94","27","72"], t: "ji", d: "财富/正缘", field: "财运" },
-        "延年": { p: ["19","91","78","87","34","43","26","62"], t: "ji", d: "能力/事业", field: "事业" },
-        "生气": { p: ["14","41","67","76","39","93","28","82"], t: "ji", d: "贵人/乐天", field: "贵人" },
-        "伏位": { p: ["11","22","88","99","66","77","33","44"], t: "ji", d: "蓄势/等待", field: "稳定" },
-        "绝命": { p: ["12","21","69","96","48","84","37","73"], t: "xiong", d: "偏激/投资", field: "风险" },
-        "五鬼": { p: ["18","81","79","97","36","63","24","42"], t: "xiong", d: "变动/血光", field: "变数" },
-        "六煞": { p: ["16","61","47","74","38","83","29","92"], t: "xiong", d: "偏桃花/抑郁", field: "人际" },
-        "祸害": { p: ["17","71","89","98","46","64","23","32"], t: "xiong", d: "口舌/小人", field: "健康" }
+        "天医": { p: ["13","31","68","86","49","94","27","72"], field: "财运", type: "ji", desc: "主大财、聪明、婚姻。" },
+        "延年": { p: ["19","91","78","87","34","43","26","62"], field: "事业", type: "ji", desc: "主领导力、能力、压力。" },
+        "生气": { p: ["14","41","67","76","39","93","28","82"], field: "贵人", type: "ji", desc: "主贵人相助、乐天、好名声。" },
+        "伏位": { p: ["11","22","88","99","66","77","33","44"], field: "稳定", type: "ji", desc: "主等待、蓄势、被动。" },
+        "绝命": { p: ["12","21","69","96","48","84","37","73"], field: "决断", type: "xiong", desc: "主极端、投资、好胜心。" },
+        "五鬼": { p: ["18","81","79","97","36","63","24","42"], field: "变幻", type: "xiong", desc: "主才华、变动、血光。" },
+        "六煞": { p: ["16","61","47","74","38","83","29","92"], field: "人际", type: "xiong", desc: "主桃花、纠结、抑郁。" },
+        "祸害": { p: ["17","71","89","98","46","64","23","32"], field: "口才", type: "xiong", desc: "主口舌、病痛、小人。" }
     };
 
-    function getPairs(num) {
-        let pairs = [];
-        let raw = num.toString().replace(/[^\d]/g,'');
-        for (let i = 0; i < raw.length - 1; i++) {
-            if (raw[i] === '0' || raw[i] === '5') continue;
-            let next = i + 1;
-            while(next < raw.length && (raw[next] === '0' || raw[next] === '5')) next++;
-            if (next < raw.length) pairs.push(raw[i] + raw[next]);
+    let proChart = null;
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.innerText = msg; t.style.display = 'block';
+        setTimeout(() => t.style.display = 'none', 3000);
+    }
+
+    function getPairs(str) {
+        const cleaned = str.replace(/[^\d]/g, '');
+        const pairs = [];
+        for (let i = 0; i < cleaned.length - 1; i++) {
+            let pair = cleaned[i] + cleaned[i+1];
+            if (cleaned[i] === '0' || cleaned[i] === '5' || cleaned[i+1] === '0' || cleaned[i+1] === '5') continue;
+            pairs.push(pair);
         }
         return pairs;
     }
 
-    function deepAnalyze() {
-        const birth = document.getElementById('birthInput').value;
-        const phone = document.getElementById('phoneInput').value;
-        const car = document.getElementById('carInput').value;
-
-        if(!birth || !phone) { alert("生日和手机号是核心，请输入"); return; }
-
-        document.getElementById('resultArea').style.display = 'block';
-
-        // 1. 先天命格
-        let birthPairs = getPairs(birth);
-        let birthStars = birthPairs.map(p => getStarInfo(p)).filter(x => x);
-
-        // 2. 手机磁场
-        let phonePairs = getPairs(phone);
-        let phoneStars = phonePairs.map(p => getStarInfo(p)).filter(x => x);
-
-        // 3. 车牌磁场
-        let carStars = car ? getPairs(car).map(p => getStarInfo(p)).filter(x => x) : [];
-
-        // 综合计算评分
-        let score = 80;
-        let advice = "";
-
-        // 逻辑：如果生日里缺财富(天医)，手机里有补，加分
-        const hasBirthWealth = birthStars.some(s => s.name === "天医");
-        const hasPhoneWealth = phoneStars.some(s => s.name === "天医");
-        
-        if(!hasBirthWealth && hasPhoneWealth) {
-            advice += "💡 先天财库较虚，幸好手机号补足了天医财尘，利于聚财。<br>";
-            score += 10;
-        } else if (hasBirthWealth && hasPhoneWealth) {
-            advice += "💰 先天带财且后天助运，财源广进，但需注意守财。<br>";
-        }
-
-        // 车牌安全检查
-        const hasCarDanger = carStars.some(s => s.name === "绝命" || s.name === "五鬼");
-        if(hasCarDanger) {
-            advice += "⚠️ 车牌中带有冲动或变动磁场，行车需格外注意安全，防剐蹭。<br>";
-            score -= 15;
-        }
-
-        document.getElementById('totalScore').innerText = score;
-        document.getElementById('summaryText').innerHTML = advice || "整体能量磁场平衡，属于平稳上升的命格。";
-
-        // 维度详情展示
-        renderDimensions(birthStars, phoneStars, carStars);
-    }
-
-    function getStarInfo(pair) {
-        for (let name in starMap) {
-            if (starMap[name].p.includes(pair)) return { name, ...starMap[name] };
+    function getStar(pair) {
+        for (let key in starMap) {
+            if (starMap[key].p.includes(pair)) return { name: key, ...starMap[key] };
         }
         return null;
     }
 
-    function renderDimensions(b, p, c) {
-        const area = document.getElementById('dimAnalysis');
-        area.innerHTML = `
-            <div class="report-box">
-                <strong>先天命格 (生日)</strong><br>
-                ${b.length ? b.map(s => `<span class="star-item">${s.name} <small>${s.d}</small></span>`).join('') : '磁场较弱'}
-            </div>
-            <div class="report-box" style="border-color: #3b82f6;">
-                <strong>后天运势 (手机)</strong><br>
-                ${p.length ? p.map(s => `<span class="star-item">${s.name} <small>${s.d}</small></span>`).join('') : '磁场较弱'}
-            </div>
-            ${c.length ? `<div class="report-box" style="border-color: #10b981;"><strong>载体能量 (车牌)</strong><br>${c.map(s => `<span class="star-item">${s.name} <small>${s.d}</small></span>`).join('')}</div>` : ''}
+    function runProAnalysis() {
+        const birth = document.getElementById('birthInput').value;
+        const phone = document.getElementById('phoneInput').value;
+        const car = document.getElementById('carInput').value;
+
+        if (birth.length < 8 || phone.length < 11) return showToast("请完整填写生日和手机号");
+
+        const bStars = getPairs(birth).map(getStar).filter(Boolean);
+        const pStars = getPairs(phone).map(getStar).filter(Boolean);
+        const cStars = getPairs(car).map(getStar).filter(Boolean);
+
+        document.getElementById('resultArea').style.display = 'block';
+
+        // 1. 深度评分逻辑
+        let score = 80;
+        let combinations = [];
+        let advices = [];
+
+        // 手机尾号深度分析 (后四位最重要)
+        const tailNum = phone.slice(-4);
+        const tailPairs = getPairs(tailNum).map(getStar).filter(Boolean);
+        
+        if (tailPairs.length > 0) {
+            const lastStar = tailPairs[tailPairs.length - 1];
+            if (lastStar.type === 'xiong') {
+                score -= 15;
+                advices.push(`🚩 <b>尾号警示：</b>手机末尾出现【${lastStar.name}】，代表运势收尾处有${lastStar.field}方面的波折，建议凡事多留退路。`);
+            } else {
+                score += 10;
+                advices.push(`✅ <b>吉祥收尾：</b>手机末尾以【${lastStar.name}】磁场封口，利于${lastStar.field}的沉淀与守成。`);
+            }
+        }
+
+        // 磁场组合解析
+        const combined = [...pStars];
+        for (let i = 0; i < combined.length - 1; i++) {
+            const s1 = combined[i].name;
+            const s2 = combined[i+1].name;
+            
+            if (s1 === "天医" && s2 === "延年") {
+                combinations.push("💰 <b>天医+延年：</b>极佳的理财组合，不仅会赚钱，更能守住财，属于老板格局。");
+                score += 5;
+            }
+            if (s1 === "生气" && s2 === "天医") {
+                combinations.push("🤝 <b>生气+天医：</b>贵人送财。通过人脉或朋友引荐获得财富，事业顺遂。");
+                score += 5;
+            }
+            if (s1 === "绝命" && s2 === "天医") {
+                combinations.push("⚡ <b>绝命+天医：</b>适合风险投资或技术转财，但需防范大起大落。");
+            }
+        }
+
+        // 先天后天补位分析
+        const bHasWealth = bStars.some(s => s.name === "天医");
+        const pHasWealth = pStars.some(s => s.name === "天医");
+        if (!bHasWealth && pHasWealth) {
+            advices.push("💡 <b>先天补给：</b>您的命格中财富磁场较弱，但手机号成功引入了天医磁场，起到了很好的转运作用。");
+            score += 10;
+        }
+
+        // 分数动画
+        const scoreEl = document.getElementById('totalScore');
+        const finalScore = Math.min(99, Math.max(30, score));
+        let count = 0;
+        const itv = setInterval(() => {
+            if (count >= finalScore) { scoreEl.innerText = finalScore; clearInterval(itv); }
+            else { scoreEl.innerText = ++count; }
+        }, 15);
+
+        // 渲染UI
+        document.getElementById('mainSummary').innerHTML = finalScore > 85 ? "磁场极度和谐，后天助运明显" : "磁场分布较为分散，建议优化细节";
+        
+        const combDiv = document.getElementById('combinationAdvice');
+        combDiv.innerHTML = combinations.length > 0 ? combinations.map(c => `<div class="advice-item">${c}</div>`).join('') : '<div class="advice-item">暂无显著磁场组合，建议关注基础磁场强度。</div>';
+
+        const lifeDiv = document.getElementById('lifeAdvice');
+        lifeDiv.innerHTML = advices.map(a => `<div class="advice-item">${a}</div>`).join('') + `
+            <div class="advice-item">📈 <b>事业建议：</b>近期适合利用【${pStars[0]?.name || '伏位'}】的力量，在稳定的基础上寻求突破。</div>
+            <div class="advice-item">🍎 <b>健康建议：</b>${pStars.some(s => s.name === "祸害") ? "注意呼吸系统及免疫力提升。" : "能量充沛，保持规律作息即可。"}</div>
         `;
+
+        renderProChart(pStars);
+        window.scrollTo({ top: document.getElementById('resultArea').offsetTop, behavior: 'smooth' });
+    }
+
+    function renderProChart(stars) {
+        const dataMap = { "财运": 50, "事业": 50, "贵人": 50, "稳定": 50, "人际": 50, "决断": 50 };
+        stars.forEach(s => {
+            if (s.type === 'ji') dataMap[s.field] += 15;
+            else dataMap[s.field] -= 10;
+        });
+
+        const ctx = document.getElementById('proChart').getContext('2d');
+        if (proChart) proChart.destroy();
+        proChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: Object.keys(dataMap),
+                datasets: [{
+                    label: '当前磁场强度',
+                    data: Object.values(dataMap),
+                    backgroundColor: 'rgba(245, 158, 11, 0.2)',
+                    borderColor: '#f59e0b',
+                    pointBackgroundColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        angleLines: { color: 'rgba(255,255,255,0.1)' },
+                        pointLabels: { color: '#94a3b8' },
+                        ticks: { display: false }
+                    }
+                },
+                plugins: { legend: { display: false } },
+                maintainAspectRatio: false
+            }
+        });
     }
 </script>
 
