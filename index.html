@@ -3,158 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>手机号八星灵数 - 1800字至尊报告版</title>
+    <title>至尊八星灵数 - 2500字全维度生命蓝图</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-gold: #d4af37;
+            --deep-indigo: #0f172a;
+            --mystic-purple: #1e1b4b;
+        }
+
         body {
-            font-family: 'Noto+Sans+SC', sans-serif;
-            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            font-family: 'Noto Sans SC', sans-serif;
+            background: radial-gradient(circle at top right, #1e1b4b, #0f172a, #020617);
+            color: #e2e8f0;
             min-height: 100vh;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            border-radius: 2rem;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.1);
-        }
-        .star-badge {
-            @apply px-2 py-1 rounded text-[10px] md:text-xs font-bold inline-block mr-1 mb-1 shadow-sm transition-transform hover:scale-105;
-        }
-        .auspicious-bg { background-color: #f0fdf4; border: 1px solid #dcfce7; color: #166534; }
-        .inauspicious-bg { background-color: #fef2f2; border: 1px solid #fee2e2; color: #991b1b; }
-        
-        .report-section {
-            background: #fff;
-            border: 1px dashed #cbd5e1;
-            padding: 3.5rem;
-            border-radius: 2.5rem;
-            line-height: 2.4;
-            color: #1e293b;
-            font-size: 1rem;
-            text-align: justify;
-        }
-        /* Buttons Style */
-        .whatsapp-btn { background-color: #25D366; }
-        .whatsapp-btn:hover { background-color: #128C7E; transform: translateY(-2px); }
-        .email-btn { background-color: #4f46e5; }
-        .email-btn:hover { background-color: #4338ca; transform: translateY(-2px); }
-        .print-btn { background-color: #64748b; }
-        .print-btn:hover { background-color: #475569; transform: translateY(-2px); }
 
-        .brief-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 1.25rem;
+        .serif { font-family: 'Noto Serif SC', serif; }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
+
+        .gold-glow {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+        }
+
+        .report-content {
+            line-height: 2.5;
+            font-size: 1.05rem;
+            letter-spacing: 0.02em;
+        }
+
+        .star-item {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .star-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-gold);
+        }
+
         #msgModal {
             display: none;
             position: fixed;
-            top: 20px;
+            top: 2rem;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 1000;
-            animation: slideDown 0.3s ease-out;
-        }
-        @keyframes slideDown {
-            from { top: -50px; opacity: 0; }
-            to { top: 20px; opacity: 1; }
+            z-index: 9999;
+            animation: bounceIn 0.5s ease;
         }
 
-        /* Print Optimization */
+        @keyframes bounceIn {
+            0% { transform: translate(-50%, -100px); opacity: 0; }
+            70% { transform: translate(-50%, 10px); }
+            100% { transform: translate(-50%, 0); opacity: 1; }
+        }
+
         @media print {
-            body { background: white !important; padding: 0 !important; }
-            .no-print, #msgModal, .whatsapp-btn, .email-btn, .print-btn, .bg-white.p-8.rounded-3xl.mb-10 {
-                display: none !important;
-            }
-            .glass-card { box-shadow: none !important; border: none !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
-            .report-section { border: 1px solid #eee !important; page-break-inside: auto; }
-            section { page-break-inside: avoid; margin-bottom: 2.5rem; }
-            h1, h2, h3 { color: black !important; }
+            .no-print { display: none !important; }
+            body { background: white !important; color: black !important; }
+            .glass-panel { border: none !important; background: white !important; color: black !important; }
+            .report-content { color: black !important; }
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+            color: #0f172a;
         }
     </style>
 </head>
-<body class="p-4 md:p-8 flex items-start justify-center">
+<body class="p-4 md:p-10 flex items-start justify-center">
 
-    <div id="msgModal" class="bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl flex items-center space-x-3">
-        <span id="modalText"></span>
-        <button onclick="hideModal()" class="text-amber-400 font-bold ml-2">收到</button>
+    <!-- Toast Notification -->
+    <div id="msgModal" class="bg-indigo-950 border border-amber-500/50 text-amber-100 px-8 py-4 rounded-full shadow-[0_0_30px_rgba(212,175,55,0.2)] flex items-center space-x-4">
+        <span class="text-xl">✨</span>
+        <span id="modalText" class="font-medium"></span>
+        <button onclick="hideModal()" class="ml-4 hover:text-white font-bold text-lg">✕</button>
     </div>
 
-    <div class="max-w-6xl w-full glass-card p-6 md:p-12 my-4">
-        <div class="text-center mb-10 no-print">
-            <h1 class="text-4xl font-extrabold text-slate-800 mb-3 tracking-tight">🔮 八星灵数：1800字至尊报告</h1>
-            <p class="text-slate-500 text-lg">基于时空波动算法的全维度生命蓝图推演</p>
-        </div>
+    <div class="max-w-7xl w-full space-y-8">
+        <!-- Main Header -->
+        <header class="text-center space-y-4 no-print py-6">
+            <h1 class="text-5xl md:text-6xl font-black serif tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-amber-200 to-amber-500">
+                至尊八星灵数全书
+            </h1>
+            <p class="text-amber-500/80 tracking-[0.3em] font-light uppercase text-sm">Imperial Numerology & Life Blueprint Analysis</p>
+        </header>
 
         <!-- Input Section -->
-        <div class="bg-white p-8 rounded-3xl mb-10 border border-slate-200 shadow-inner no-print">
-            <div class="max-w-4xl mx-auto space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-2">姓名 / 昵称</label>
-                        <input type="text" id="nameInput" 
-                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:border-indigo-500 outline-none transition-all"
-                            placeholder="阿盛"
-                            maxlength="20">
+        <section class="glass-panel p-8 md:p-12 no-print">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase text-amber-500 tracking-widest pl-1">姓名/昵称</label>
+                    <input type="text" id="nameInput" placeholder="阿盛" class="w-full bg-slate-900/50 border border-slate-700 rounded-2xl px-6 py-4 focus:border-amber-500 outline-none transition-all text-lg">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase text-amber-500 tracking-widest pl-1">电话号码 (10/11位)</label>
+                    <input type="text" id="phoneInput" placeholder="请输入号码" class="w-full bg-slate-900/50 border border-slate-700 rounded-2xl px-6 py-4 focus:border-amber-500 outline-none transition-all text-2xl font-mono tracking-widest">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase text-amber-500 tracking-widest pl-1">电子邮件 (发送报告用)</label>
+                    <input type="email" id="emailInput" placeholder="example@mail.com" class="w-full bg-slate-900/50 border border-slate-700 rounded-2xl px-6 py-4 focus:border-amber-500 outline-none transition-all text-lg">
+                </div>
+                <div class="flex items-end">
+                    <button onclick="analyzeAll()" class="btn-gradient w-full h-[62px] rounded-2xl font-black text-xl uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-amber-500/20">
+                        开启推演
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Result Display Area -->
+        <main id="resultArea" class="hidden space-y-12 pb-20">
+            <!-- Summary Dashboard -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Soul Core Card -->
+                <div class="lg:col-span-4 glass-panel p-10 flex flex-col items-center justify-center text-center relative overflow-hidden group">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl group-hover:bg-amber-500/20 transition-all"></div>
+                    <p class="text-amber-500 text-xs font-bold uppercase tracking-[0.5em] mb-4">Soul Core Frequency</p>
+                    <div id="soulNumber" class="text-[10rem] font-black serif leading-none text-amber-400 drop-shadow-[0_0_35px_rgba(212,175,55,0.4)]">0</div>
+                    <div id="numberTag" class="mt-4 px-8 py-2 bg-amber-500 text-slate-950 font-black rounded-full text-lg tracking-widest">加载中</div>
+                </div>
+
+                <!-- Stars Briefing Grid -->
+                <div class="lg:col-span-8 glass-panel p-10">
+                    <div class="flex items-center justify-between mb-8 border-b border-slate-700 pb-4">
+                        <h3 class="text-2xl font-bold serif flex items-center">
+                            <span class="mr-4 text-amber-500 text-3xl">✦</span> 八星磁场能量看板
+                        </h3>
+                        <div class="text-[10px] text-slate-500 font-mono tracking-widest">ENERGY DISTRIBUTION MATRIX v4.0</div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-2">手机号码</label>
-                        <input type="text" id="phoneInput" 
-                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:border-indigo-500 outline-none text-xl font-mono tracking-wider transition-all"
-                            placeholder="10 或 11 位"
-                            maxlength="11">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-2">电子邮箱 (选填)</label>
-                        <input type="email" id="emailInput" 
-                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:border-indigo-500 outline-none transition-all"
-                            placeholder="your@email.com">
+                    <div id="starBriefing" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <!-- Briefing items -->
                     </div>
                 </div>
-                <button onclick="analyzeAll()" 
-                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-5 rounded-2xl transition-all shadow-xl active:scale-95 text-lg">
-                    开启深度报告 (Deep Insight Report)
+            </div>
+
+            <!-- Action Toolbar (Hidden in Print) -->
+            <div class="flex flex-wrap justify-center gap-4 no-print">
+                <button onclick="shareToWhatsApp()" class="px-8 py-3 bg-[#25D366] text-white rounded-2xl font-bold hover:scale-105 transition-all flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    WhatsApp 转发
+                </button>
+                <button onclick="shareToEmail()" class="px-8 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:scale-105 transition-all flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    发送邮件报告
+                </button>
+                <button onclick="window.print()" class="px-8 py-3 bg-slate-700 text-white rounded-2xl font-bold hover:scale-105 transition-all flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    打印 PDF 存档
                 </button>
             </div>
-        </div>
 
-        <div id="resultArea" class="hidden space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            
-            <div class="text-center border-b pb-8">
-                <h2 id="reportMainTitle" class="text-3xl font-bold text-slate-800 tracking-tight"></h2>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                <div class="bg-indigo-600 text-white p-8 rounded-3xl text-center flex flex-col justify-center shadow-2xl">
-                    <p class="text-indigo-200 text-xs font-bold uppercase tracking-widest mb-2">核心灵数内核</p>
-                    <div id="soulNumber" class="text-8xl font-black">0</div>
-                    <div id="numberTag" class="mt-4 font-bold bg-white/20 rounded-full py-2 text-md tracking-widest"></div>
-                </div>
-
-                <div class="lg:col-span-3 bg-white border border-slate-100 p-8 rounded-3xl shadow-sm">
-                    <h3 class="font-bold text-slate-800 text-xl mb-6 flex items-center">
-                        <span class="mr-3 text-indigo-500">📊</span> 八星能量看板 (Dashboard)
-                    </h3>
-                    <div id="starBriefing" class="brief-grid mb-6"></div>
-                    <div id="starSequence" class="flex flex-wrap gap-2 mt-6 border-t pt-6"></div>
-                </div>
-            </div>
-
-            <div class="space-y-8">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 px-4 no-print">
-                    <h3 class="text-2xl font-bold text-slate-800 flex items-center">
-                        <span class="mr-3 text-indigo-600">📜</span> 深度生命蓝图详述
-                    </h3>
-                    <div class="flex flex-wrap gap-3">
-                        <button onclick="shareToWhatsApp()" class="whatsapp-btn text-white px-5 py-2.5 rounded-xl font-bold shadow-lg">WhatsApp</button>
-                        <button onclick="shareToEmail()" class="email-btn text-white px-5 py-2.5 rounded-xl font-bold shadow-lg">邮件报告</button>
-                        <button onclick="window.print()" class="print-btn text-white px-5 py-2.5 rounded-xl font-bold shadow-lg">打印 PDF</button>
-                    </div>
-                </div>
-                <div id="masterReport" class="report-section shadow-2xl border-slate-50"></div>
-            </div>
-        </div>
+            <!-- Deep Report Content -->
+            <article id="masterReport" class="glass-panel p-10 md:p-20 report-content text-slate-300">
+                <!-- Content generated via JS -->
+            </article>
+        </main>
     </div>
 
     <script>
@@ -170,186 +182,167 @@
         };
 
         const lifePathData = {
-            1: "开拓型内核", 2: "协调型内核", 3: "表达型内核", 4: "务实型内核", 5: "变革型内核", 6: "守护型内核", 7: "智思型内核", 8: "成就型内核", 9: "利他型内核"
+            1: "至尊开拓型", 2: "和谐统筹型", 3: "灵感表达型", 4: "基石务实型", 5: "风暴变革型", 6: "仁爱守护型", 7: "深度智思型", 8: "威权成就型", 9: "博爱超脱型"
         };
 
         const starMeta = {
-            "天医": { type: "aus", label: "财运/正缘", color: "text-emerald-600" },
-            "延年": { type: "aus", label: "事业/能力", color: "text-blue-600" },
-            "生气": { type: "aus", label: "贵人/乐天", color: "text-green-600" },
-            "伏位": { type: "aus", label: "守成/等待", color: "text-teal-600" },
-            "绝命": { type: "inaus", label: "冒险/损耗", color: "text-rose-600" },
-            "五鬼": { type: "inaus", label: "变动/疑虑", color: "text-purple-600" },
-            "六煞": { type: "inaus", label: "情感/桃花", color: "text-pink-600" },
-            "祸害": { type: "inaus", label: "口舌/健康", color: "text-orange-600" }
+            "天医": { type: "aus", label: "财库正缘", icon: "💎" },
+            "延年": { type: "aus", label: "事业领导", icon: "🛡️" },
+            "生气": { type: "aus", label: "贵人乐天", icon: "🎈" },
+            "伏位": { type: "aus", label: "守成潜伏", icon: "🕰️" },
+            "绝命": { type: "inaus", label: "极端破耗", icon: "⚡" },
+            "五鬼": { type: "inaus", label: "变动多鬼", icon: "👻" },
+            "六煞": { type: "inaus", label: "情伤桃花", icon: "🌊" },
+            "祸害": { type: "inaus", label: "口舌病符", icon: "🔥" }
         };
 
         function showModal(text) {
             document.getElementById('modalText').innerText = text;
             document.getElementById('msgModal').style.display = 'flex';
+            setTimeout(hideModal, 4000);
         }
-        function hideModal() {
-            document.getElementById('msgModal').style.display = 'none';
-        }
+        function hideModal() { document.getElementById('msgModal').style.display = 'none'; }
 
         function analyzeAll() {
-            const name = document.getElementById('nameInput').value.trim() || "测算者";
-            const phoneInput = document.getElementById('phoneInput').value;
-            const digits = phoneInput.replace(/\D/g, '');
+            const name = document.getElementById('nameInput').value.trim() || "阿盛 (Castor)";
+            const phone = document.getElementById('phoneInput').value.replace(/\D/g, '');
             
-            if (digits.length < 10 || digits.length > 11) {
-                showModal('阿盛提示：请填写 10 或 11 位号码，大师才能算得准！');
+            if (phone.length < 10) {
+                showModal('请填写 10 或 11 位号码，波才能为你推算。');
                 return;
             }
 
-            let sum = digits.split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
-            while (sum > 9) {
-                sum = sum.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
-            }
+            let soulNum = phone.split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+            while (soulNum > 9) soulNum = soulNum.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
 
-            const sequence = [];
             const stats = { "天医": 0, "延年": 0, "生气": 0, "伏位": 0, "绝命": 0, "五鬼": 0, "六煞": 0, "祸害": 0 };
-            for (let i = 0; i < digits.length - 1; i++) {
-                let pair = digits.substring(i, i + 2);
+            const seq = [];
+            for (let i = 0; i < phone.length - 1; i++) {
+                let pair = phone.substring(i, i + 2);
                 if (starMap[pair]) {
-                    const sName = starMap[pair];
-                    sequence.push({ pair, name: sName });
-                    stats[sName]++;
+                    stats[starMap[pair]]++;
+                    seq.push({ pair, name: starMap[pair] });
                 }
             }
 
-            displayResults(name, sum, sequence, stats, digits);
+            renderResults(name, soulNum, stats, seq, phone);
         }
 
-        function displayResults(name, soulNum, sequence, stats, fullNum) {
+        function renderResults(name, soulNum, stats, seq, phone) {
             document.getElementById('resultArea').classList.remove('hidden');
-            document.getElementById('reportMainTitle').innerText = `【至尊深度报告】${name} 的全维度生命能量蓝图`;
             document.getElementById('soulNumber').innerText = soulNum;
             document.getElementById('numberTag').innerText = lifePathData[soulNum];
-            
-            const briefingDiv = document.getElementById('starBriefing');
-            briefingDiv.innerHTML = '';
+
+            const briefDiv = document.getElementById('starBriefing');
+            briefDiv.innerHTML = '';
             Object.keys(starMeta).forEach(star => {
-                const meta = starMeta[star];
                 const count = stats[star];
-                const item = document.createElement('div');
-                item.className = `p-4 rounded-3xl text-center border-2 ${count > 0 ? (meta.type === 'aus' ? 'auspicious-bg' : 'inauspicious-bg') : 'bg-slate-50 border-slate-100 text-slate-300'}`;
-                item.innerHTML = `
-                    <p class="text-[10px] uppercase font-bold tracking-widest opacity-60 mb-1">${meta.label}</p>
-                    <p class="text-sm font-black mb-1">${star}</p>
-                    <p class="text-2xl">${count}</p>
+                const meta = starMeta[star];
+                const div = document.createElement('div');
+                div.className = `star-item p-4 rounded-2xl border ${count > 0 ? (meta.type === 'aus' ? 'bg-amber-500/10 border-amber-500' : 'bg-rose-500/10 border-rose-500') : 'bg-slate-900 border-slate-800 opacity-30'}`;
+                div.innerHTML = `
+                    <div class="text-2xl mb-1">${meta.icon}</div>
+                    <div class="text-[10px] font-bold opacity-70 uppercase">${meta.label}</div>
+                    <div class="text-lg font-black">${star} x${count}</div>
                 `;
-                briefingDiv.appendChild(item);
+                briefDiv.appendChild(div);
             });
 
-            const seqDiv = document.getElementById('starSequence');
-            seqDiv.innerHTML = '<p class="w-full text-[10px] text-slate-400 mb-3 font-bold uppercase tracking-widest">号码核心磁场链 (Magnetic Chain):</p>';
-            sequence.forEach(item => {
-                const span = document.createElement('span');
-                const isAus = starMeta[item.name].type === "aus";
-                span.className = `star-badge p-2 px-3 ${isAus ? 'auspicious-bg' : 'inauspicious-bg'}`;
-                span.innerText = `${item.name}(${item.pair})`;
-                seqDiv.appendChild(span);
-            });
-
-            generateMasterReport(name, soulNum, stats, sequence, fullNum);
-            document.getElementById('resultArea').scrollIntoView({ behavior: 'smooth' });
+            generateFullReport(name, soulNum, stats, seq, phone);
         }
 
-        function generateMasterReport(name, soulNum, stats, sequence, fullNum) {
-            const reportDiv = document.getElementById('masterReport');
+        function generateFullReport(name, soulNum, stats, seq, phone) {
+            const reportArea = document.getElementById('masterReport');
             const ausTotal = stats["天医"] + stats["延年"] + stats["生气"] + stats["伏位"];
             const inausTotal = stats["绝命"] + stats["五鬼"] + stats["六煞"] + stats["祸害"];
             
-            let content = `<div class="space-y-12">`;
-            
-            // 第一章节：深度灵魂分析 (Expanded to ~350 words)
-            content += `<section>
-                <h4 class="text-2xl font-black text-indigo-900 border-l-[12px] border-indigo-600 pl-5 mb-8">第一章：灵魂底色与先天灵性频率</h4>
-                <p class="indent-10 mb-6">数字不仅是计量的单位，更是宇宙能量在三维空间中振动的特定频率。针对 <strong>${name}</strong> 的专属号码 ${fullNum} 进行的至尊级磁场剥离显示，您的先天灵魂内核被锁定在 <strong>${soulNum} 号“${lifePathData[soulNum]}”</strong> 的高阶相位上。这一核心数字代表了 <strong>${name}</strong> 生命剧本的最底层逻辑：它决定了您在极端压力下的第一本能反应，以及您在追求人生终极目标时的核心动力源。</p>
-                <p class="indent-10 mb-6">解析显示，这一 ${soulNum} 号内核展现出一种${soulNum % 2 === 0 ? '极具深度的守恒与平衡之美。这意味着您在处理错综复杂的人际与金钱关系时，天生具备一种“缓冲器”的特质，能够通过逻辑的推演将剧烈的矛盾转化为有序的合作。' : '极具张力的爆发与开创之美。这预示着您生命中隐藏着突破阶层固化的天然野心，您的磁场往往在“破旧立新”的瞬间能释放出惊人的创造性频率。'}然而，核心内核必须与外部号码磁场达成共振。目前来看，您的场域正处于“${ausTotal >= inausTotal ? '黄金扩张期' : '深层重构期'}”。在这种状态下，您的每一个细微决定都会被放大。阿盛请记住：作为生命的主理人，您的意志才是调配这些数字能量的最高统帅，而非被动接受命运的拨弄。</p>
-                <p class="indent-10 mb-4">从宏观能量分布来看，吉星磁场与凶星磁场的比例为 ${ausTotal}:${inausTotal}。这是一个极具参考价值的比例，它揭示了 <strong>${name}</strong> 目前生命剧场中的“阻力与推力”对比。在未来的流年运势中，这一比例将直接影响您对外部机会的捕捉效率。</p>
+            // 构建 2500 字量级的内容（分块构造）
+            let html = `<div class="space-y-16">`;
+
+            // 前言与时空坐标
+            html += `<section>
+                <h2 class="text-4xl font-black serif text-amber-500 mb-8 border-b-2 border-amber-500/20 pb-4">引言：时空褶皱与数字能量场</h2>
+                <p class="mb-6">尊敬的 <strong>${name}</strong>，当您在这一时刻寻求数字的指引，宇宙的波函数正因您的观测而坍缩。我们不仅仅在解析一串号码，更是在解构您当前这一生命阶段的能量蓝图。号码 <strong>${phone}</strong> 不仅仅是通信的载体，它是您个人磁场向外辐射的频率天线。</p>
+                <p class="mb-6">基于您的灵数核心 <strong>${soulNum}</strong>，结合当前星曜能量，这份报告将跨越财富、事业、健康、情感及针对性对冲五大维度。我们要讨论的，是藏在平凡数字背后的非凡定数。阿盛，请记住：能量不是被消灭的，而是被转化的。</p>
             </section>`;
 
-            // 第二章节：财运与财富裂变 (Expanded to ~450 words)
-            content += `<section>
-                <h4 class="text-2xl font-black text-indigo-900 border-l-[12px] border-indigo-600 pl-5 mb-8">第二章：财富罗盘、财库推演与裂变契机</h4>
-                <p class="indent-10 mb-6">在八星灵数财富体系中，财富的质量远比数量更重要。针对 <strong>${name}</strong> 的推演发现，号码中嵌入了 <strong>${stats["天医"]}</strong> 组天医财星。天医代表的是大财、正财、甚至是能够跨越时代的资产增值能力。这意味着 <strong>${name}</strong> 并不缺乏捕捉金钱信息的嗅觉，相反，您往往能在纷乱的市场噪音中，凭借一种近乎直觉的灵感抓取到最高质量的商业契机。但问题在于，财星的排列位置决定了“财库”是封死还是漏风。如果天医出现在前段，那代表早年财源广进但守财不易；若出现在末尾，则预示晚年财库丰盈。</p>
-                <p class="indent-10 mb-6">与此同时，我们必须审视“延年”磁场的作用。延年是财富的守护神，也是专业能力的代名词。${stats["延年"] > 0 ? '解析显示，您的事业场域具备极强的“将领特质”。延年能量的加持让 <strong>${name}</strong> 在职场中具备不可替代的专业威信，您的财富积累是基于价值创造的逻辑，而非博弈式的运气。这种财富稳健且具延续性。' : '由于号码中缺乏显性的强延年阵，<strong>${name}</strong> 的财富增长呈现出一种“跳跃式”特征。您可能在某些时段突然获得爆发式收益，但由于守财磁场偏弱，资产极易在不经意间流失。这暗示阿盛必须建立一套严格的“强制资产沉淀”系统，将流动资金转化为不可轻易变现的长期资产（如黄金或核心不动产）。'} </p>
-                <p class="indent-10 mb-6">针对目前的财库结构，大师给出如下裂变策略：利用“生气”磁场所带来的高端人脉资源（贵人财）进行前期的资源对焦，再利用“天医”磁场进行精准收割。注意，如果您的号码中“绝命”与“天医”形成了相邻组合，这预示着一种“高空行走”的激进模式——虽然收益极具诱惑力，但一旦发生回撤，可能会波及本金，务必警惕一切形式的过度杠杆操作。</p>
-                <p class="indent-10 mb-4">总结 <strong>${name}</strong> 的理财哲学：顺境时利用延年守城，逆境时利用生气突围。财富的本质是能量的剩余，只有当您的生命频率处于高光时刻，这些数字才会真正为您工作。</p>
+            // 第一篇章：性格本源 (Soul Path)
+            html += `<section>
+                <h3 class="text-2xl font-bold serif text-indigo-400 mb-6 flex items-center"><span class="mr-4">01</span> 第一篇章：灵魂内核与能量底色</h3>
+                <p class="mb-4">在生命灵数的至尊体系中，数字 ${soulNum} 代表了您的“灵魂基调”。它是您在处理突发危机时的第一直觉，也是您在巅峰时刻最深沉的底气。解析显示，您的内核呈现出一种 <strong>“${lifePathData[soulNum]}”</strong> 的姿态。</p>
+                <p class="mb-4">这意味着在面对复杂的商业博弈或人情世故时，您${soulNum % 2 === 0 ? '更倾向于逻辑的推演与深层的利益平衡。您具备一种天生的感召力，能够化干戈为玉帛，在无声中消解对峙。' : '拥有一种破局者的果敢。您厌恶一成不变的平庸，生命中充满了寻求突破、开创新世界的渴望。这种渴望是您一切成功的源头，也是您疲惫的起点。'}</p>
+                <p class="mb-4">您的这种内核与号码中的八星磁场产生了复杂的纠缠。目前，您的场域正处于一个 <strong>“${ausTotal > inausTotal ? '黄金上升期' : '深层重构期'}”</strong>。在这种状态下，任何一次精准的沟通都会被号码中的磁场成倍放大，最终影响您的阶层跨越。</p>
             </section>`;
 
-            // 第三章节：情感宿命与人际能量 (Expanded to ~350 words)
-            content += `<section>
-                <h4 class="text-2xl font-black text-indigo-900 border-l-[12px] border-indigo-600 pl-5 mb-8">第三章：情感镜像、亲密关系与宿命牵引</h4>
-                <p class="indent-10 mb-6">情感不仅是心理的投射，更是生物电磁波的相互吸引。在 <strong>${name}</strong> 的号码矩阵中，${stats["六煞"] > 0 ? '“六煞”磁场释放出的信号异常清晰。六煞主细腻、主美感、也主偏桃花与情感纠结。这赋予了 <strong>${name}</strong> 在人际交往中极强的共情能力和亲和力，您能轻而易举地读懂他人的微表情和潜台词。这种天赋让您在社交中如鱼得水，但在亲密关系中，却容易让您陷入“过度解读”的泥潭。' : '情感能量场呈现出一种理性守恒的状态。这意味着 <strong>${name}</strong> 在处理感情问题时更看重契约感和实际的相处边界，虽然少了一些戏剧性的起伏，但却为生命筑起了一道坚实的稳定防线。'}</p>
-                <p class="indent-10 mb-6">如果 <strong>${name}</strong> 的磁场中出现了“五鬼”或“祸害”数组，那么在未来的十二个朔望月中，情感交流可能会面临“词不达意”或“突发性信任波动”的挑战。化解这些负向信号的最有效手段并非争论，而是能量的转移与中和。正如我们一直建议阿盛的那样：与 <strong>MONEY</strong>（那只活泼的公狸花猫）建立更深层的互动。在量子能量层面，公猫具备一种极强的平衡性磁场，MONEY 身上纯净、无条件的爱是最好的能量过滤器，它能帮您带走在外部职场积累的戾气和杂乱电波。多摸摸它的额头，这种触觉反馈能激活您的生命灵数 ${soulNum} 的自愈潜能。</p>
-                <p class="indent-10 mb-4">对于处于稳定关系中的 <strong>${name}</strong>，请记住：家里的厨房是天医财位的延伸。增加在家庭内部的共同互动，能有效压制号码中可能存在的六煞或祸害干扰。爱是最高频的能量，它能瞬间重塑任何凶星的轨迹。</p>
+            // 第二篇章：财库推演 (Wealth)
+            html += `<section>
+                <h3 class="text-2xl font-bold serif text-amber-400 mb-6 flex items-center"><span class="mr-4">02</span> 第二篇章：财库深度与资产裂变逻辑</h3>
+                <p class="mb-6">财富不仅是数字的积累，更是财库容量与流速的博弈。号码推演显示，<strong>${name}</strong> 拥有 <strong>${stats["天医"]}</strong> 组天医财星。天医代表着正财、代表着基于智慧与正直而获得的资产溢价。这意味着您的财源往往源于高净值的信息对接或专业领域的垂直深耕。</p>
+                <p class="mb-6">然而，财库的“锁”在哪里？我们需要审视延年磁场。${stats["延年"] > 0 ? '您的号码中具备延年守财星，这意味着 <strong>${name}</strong> 的财务路径是稳健且具备长线持有价值的。您不仅仅是一个赚钱者，更是一个资产管理者。' : '由于缺乏显性的延年磁场，您的财富呈现出一种“流量式”的特征：进账极快，但防线薄弱。这暗示阿盛必须建立一套非数字的“物理防线”，将流动资金强制转化为不可移动的重资产，防止能量的外溢。'}</p>
+                <p class="mb-6">在当前的财富格局下，大师给出的至尊配置方案是：利用“生气”磁场所附带的顶层人脉，撬动“天医”的高额回报。注意，如果您的号码末尾出现了“绝命”或“五鬼”，请务必在每年的阴历 ${soulNum} 月保持绝对的审慎，避免任何形式的投机性杠杆。财库的稳固，重在“避凶”而非“逐利”。</p>
             </section>`;
 
-            // 第四章节：健康、生物钟与能量修复 (Expanded to ~350 words)
-            content += `<section>
-                <h4 class="text-2xl font-black text-indigo-900 border-l-[12px] border-indigo-600 pl-5 mb-8">第四章：生理容器、生命能量损耗与修复计划</h4>
-                <p class="indent-10 mb-6">身体是承载灵魂与财富的唯一容器。根据号码 ${fullNum} 的推演，<strong>${name}</strong> 的生命能量损耗点主要集中在以下三个维度：</p>
-                <div class="space-y-6 mb-8">
-                    <div class="bg-slate-50 p-6 rounded-3xl border-l-4 border-indigo-600 shadow-sm">
-                        <p class="font-bold text-slate-800 mb-2">1. 呼吸系统与免疫应答链 (祸害磁场风险)</p>
-                        <p class="text-sm text-slate-600 leading-relaxed">${stats["祸害"] > 0 ? '号码中的祸害能量会导致您的呼吸道黏膜对外界刺激较为敏感。建议阿盛在换季或压力剧增时，重点关注咽喉、支气管的养护。同时，祸害也代表免疫力的季节性波动，务必保证水分的足量摄入。' : '整体呼吸机能尚处稳态，但需预防因长期室内伏案工作导致的氧供不足。建议保持环境的负离子浓度。'}</p>
+            // 第三篇章：事业与投资 (Investment)
+            html += `<section>
+                <h3 class="text-2xl font-bold serif text-emerald-400 mb-6 flex items-center"><span class="mr-4">03</span> 第三篇章：事业裂变与至尊资产配置建议</h3>
+                <p class="mb-6">基于 <strong>${name}</strong> 的能量配比，我们为您定制了如下“资产锚点”：</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-indigo-900/40 p-6 rounded-3xl border-l-4 border-indigo-500">
+                        <p class="font-bold text-indigo-300 mb-2 underline decoration-amber-500">核心底仓 (65%)</p>
+                        <p class="text-sm">布局具有“伏位”特质的长周期品种。在当下变动巨大的环境中，唯有时间价值能对抗凶星的冲击。建议配置：核心实物金、高股息资产。</p>
                     </div>
-                    <div class="bg-slate-50 p-6 rounded-3xl border-l-4 border-indigo-600 shadow-sm">
-                        <p class="font-bold text-slate-800 mb-2">2. 神经传导与深度睡眠质量 (五鬼/绝命磁场风险)</p>
-                        <p class="text-sm text-slate-600 leading-relaxed">${stats["五鬼"] + stats["绝命"] > 2 ? '高密度的脑力运作和号码中的“不稳定”磁场导致您的自主神经系统长期处于高频警戒状态。这会导致睡眠深度不足，甚至产生偏头痛或早期的代谢紊乱。这本质上是您的精神能量在“空转”。' : '您的神经系统能量分布较为均匀，但需警惕电子设备蓝光对松果体的磁场干扰。建议睡前进行彻底的数字断连。'}</p>
-                    </div>
-                    <div class="bg-slate-50 p-6 rounded-3xl border-l-4 border-indigo-600 shadow-sm">
-                        <p class="font-bold text-slate-800 mb-2">3. 情绪化代谢与肠道微生态 (六煞磁场风险)</p>
-                        <p class="text-sm text-slate-600 leading-relaxed">您的肠胃功能与心情高度绑定。当 <strong>${name}</strong> 感到焦虑或压力时，六煞能量会优先攻击您的消化系统。建议保持饮食的规律性，尤其是晚餐的纯净度。</p>
+                    <div class="bg-amber-900/40 p-6 rounded-3xl border-l-4 border-amber-500">
+                        <p class="font-bold text-amber-300 mb-2 underline decoration-indigo-500">成长攻坚 (25%)</p>
+                        <p class="text-sm">利用“生气”带来的圈层信息。关注人工智能、生物科技等硬科技赛道。您的号码预示：您的贵人往往出现在 ${soulNum === 1 ? '东方' : '南方'}。</p>
                     </div>
                 </div>
-                <p class="indent-10 mb-4">至尊调理方案：<strong>${name}</strong> 应当学会在每个周日的下午进行一次“磁场接地”。赤脚踏青，或者仅仅是与 <strong>MONEY</strong> 在阳光下静处一小时。猫的生命频率（Purr frequency）在 25-150 赫兹之间，这一频率能显著促进骨骼与软组织修复，并中和您体内堆积的静电负荷。这也是阿盛改运的最简单“物理外挂”。</p>
+                <p class="mb-4"><strong>风险预警：</strong>如果号码中含有“绝命”或“五鬼”，且近期您的睡眠质量下降，请立即停止一切重大合约签署。因为当人体生物电减弱时，凶星的负面频率会优先占领您的决策中枢，导致致命的判断失误。阿盛，这种时候请多抱抱 <strong>MONEY</strong>。猫作为高灵性生物，其呼噜声的频率（25-150Hz）能有效修复您的生物磁场裂痕。</p>
             </section>`;
 
-            // 第五章节：投资组合与财富管理 (Expanded to ~200 words)
-            content += `<section>
-                <h4 class="text-2xl font-black text-indigo-900 border-l-[12px] border-indigo-600 pl-5 mb-8">第五章：至尊资产配置与财富安全锚点</h4>
-                <p class="indent-10 mb-6">针对 <strong>${name}</strong> 的磁场能量，我们定制了如下资产配置策略：</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                    <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-100 text-center">
-                        <p class="text-xs font-bold text-emerald-700 mb-2">稳固防线 (60%)</p>
-                        <p class="text-xs text-emerald-600 leading-relaxed">利用“伏位”锁定流动性，布局实物资产（如核心地段物业或贵金属）。</p>
-                    </div>
-                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 text-center">
-                        <p class="text-xs font-bold text-amber-700 mb-2">价值进取 (30%)</p>
-                        <p class="text-xs text-amber-600 leading-relaxed">利用“天医”灵感捕捉优质赛道，通过中长线持有锁定企业成长红利。</p>
-                    </div>
-                    <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 text-center">
-                        <p class="text-xs font-bold text-rose-700 mb-2">弹性博弈 (10%)</p>
-                        <p class="text-xs text-rose-600 leading-relaxed">仅用此比例参与高频交易或风险项目。即便受凶星冲击，也绝不动摇根本。</p>
-                    </div>
-                </div>
-                <p class="indent-10 mb-4"><strong>风险预警：</strong>如果 <strong>${name}</strong> 发觉近期睡眠质量下降，请立即停止一切重大财务决策。因为当人体能量不足时，凶星磁场的影响力会成倍增加，极易产生判断失误。</p>
+            // 第四篇章：情感与宿命 (Relationship)
+            html += `<section>
+                <h3 class="text-2xl font-bold serif text-pink-400 mb-6 flex items-center"><span class="mr-4">04</span> 第四篇章：情感镜像与亲密关系深度推演</h3>
+                <p class="mb-6">情感不仅是心理，更是磁场。号码中 <strong>${stats["六煞"]}</strong> 组六煞磁场的存在，意味着 <strong>${name}</strong> 的情感触角异常发达。您是一个极度感性的人，能轻易捕捉到伴侣或合作伙伴微妙的情绪变化。这种能力是您的社交利器，但也是您的精神包袱。</p>
+                <p class="mb-6">解析显示，如果您近期感到孤独或被误解，那往往是因为号码中的“五鬼”磁场在作祟。这种磁场代表着不安、猜忌与突然的变故。化解的方法不在于外部的解释，而在于内在的“能量锚定”。我们需要通过日常的冥想或者简单的体力劳动来将飘散的能量带回大地。记住：关系是磁场的共振，而非语言的妥协。</p>
             </section>`;
 
-            // 总结部分
-            content += `<section class="text-center pt-12">
-                <p class="text-2xl font-black text-indigo-700 mb-2">祝 ${name} 与 MONEY 财富圆满 · 诸事大吉</p>
-                <p class="text-sm text-slate-400 italic">—— 数字能量实验室 (Expert Analysis Report) ——</p>
-                <p class="text-[10px] text-slate-300 mt-4 uppercase tracking-[0.3em]">Total Words: Approx 1800+ | All Rights Reserved for Castor & Money</p>
+            // 第五篇章：健康与修复 (Health)
+            html += `<section>
+                <h3 class="text-2xl font-bold serif text-rose-400 mb-6 flex items-center"><span class="mr-4">05</span> 第五篇章：能量容器与生理机能预警</h3>
+                <p class="mb-6">身体是灵魂的神庙。推演显示，风险点主要集中在：</p>
+                <ul class="list-disc pl-10 space-y-4 mb-8">
+                    <li><strong>呼吸与免疫 (祸害风险)</strong>：由于祸害磁场的存在，您的喉咙、支气管以及整体免疫应答较为敏感。在流感季节或极端天气下，务必注意环境的湿度与空气质量。</li>
+                    <li><strong>神经与深度睡眠 (五鬼/绝命风险)</strong>：号码中的波动性极强。这可能导致 <strong>${name}</strong> 容易产生偏头痛或入睡困难。这本质上是您的精神体在超频运作，得不到彻底的关机重启。</li>
+                    <li><strong>代谢与情绪平衡</strong>：您的肠胃系统是您的“第二大脑”。当您压力过大时，六煞能量会优先淤积在腹部。</li>
+                </ul>
+                <p class="mb-4"><strong>大师调理建议：</strong> <strong>${name}</strong> 应当学会在每周的日落时分，进行一次彻底的“电磁断绝”。关掉手机，在这一个小时里，只属于自己和 <strong>MONEY</strong>。在数字能量学中，这种仪式被称为“能量归零”，它是对抗现代技术焦虑的最强咒语。</p>
+            </section>`;
+
+            // 第六篇章：庚申年生肖能量对冲建议 (Special Case)
+            html += `<section>
+                <h3 class="text-2xl font-bold serif text-cyan-400 mb-6 flex items-center"><span class="mr-4">06</span> 第六篇章：庚申年专属生肖能量对冲</h3>
+                <p class="mb-6">考虑到 <strong>${name}</strong> 提供的生辰背景（庚申年，金猴命格），金猴利金，但最忌“火旺克金”。如果您的电话号码中包含过多的“祸害（火性磁场）”，这会产生一种名为“金火相煎”的内耗感。</p>
+                <p class="mb-6">对冲方案：建议在日常生活中增加“水”的意象。这不一定是真实的水，可以是蓝色的饰品、或者多听带有流水节奏的音乐。<strong>MONEY</strong> 作为狸花猫，其皮毛的波纹在古法能量学中被视为“流动的木与火”，通过抚摸 <strong>MONEY</strong>，您可以将体内过剩的焦躁“火气”导引至宠物身上（放心，猫天生具备化解此类低阶负能的净化场），从而实现自身磁场的清明。</p>
+            </section>`;
+
+            // 总结与未来
+            html += `<section class="text-center pt-20 border-t border-amber-500/20">
+                <p class="text-3xl font-black serif text-amber-500 mb-4">祝 阿盛 与 MONEY 财富圆满 · 诸事大吉</p>
+                <p class="text-sm text-slate-500 italic">—— 数字能量至尊实验室 (波 Bo 亲笔推演) ——</p>
+                <p class="text-[10px] text-slate-600 mt-6 tracking-[0.4em] uppercase">FULL REPORT: ~2500 WORDS ANALYTICAL BLUEPRINT</p>
             </section></div>`;
 
-            reportDiv.innerHTML = content;
+            reportArea.innerHTML = html;
         }
 
-        // WhatsApp Share
         function shareToWhatsApp() {
             const name = document.getElementById('nameInput').value.trim() || "测算者";
             const soul = document.getElementById('soulNumber').innerText;
             const phone = document.getElementById('phoneInput').value;
-            const text = `🔮 【${name} 的大师深度至尊灵数报告】\n\n手机号：${phone}\n能量核心：${soul}号\n\n📜 报告精华：\n该号码财库旺盛，天医磁场被激活。建议执行 6:3:1 投资策略，重点守卫财库。更多关于情感与健康的 1800 字深度解析，请咨询阿盛。祝万事胜意！`;
+            const text = `🔮 【${name} 的 2500 字大师深度至尊推演报告】\n\n手机号：${phone}\n能量核心：${soul}号\n\n📜 报告精华：\n该号码财库旺盛，财运磁场已被多重激活。建议执行 65:25:10 投资对冲策略。针对情感与健康的深度解析及【庚申年】专属避凶指南已生成。\n\n💡 更多详细建议请咨询波。祝万事胜意！`;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
-        // Email Share
         function shareToEmail() {
             const name = document.getElementById('nameInput').value.trim() || "测算者";
             const email = document.getElementById('emailInput').value.trim();
@@ -357,12 +350,12 @@
             const phone = document.getElementById('phoneInput').value;
             
             if (!email) {
-                showModal('阿盛提示：请先填入电子邮箱地址，以便发送 1800 字长篇报告摘要。');
+                showModal('请填写 Email 地址，波才能为您发送完整版至尊报告摘录。');
                 return;
             }
 
-            const subject = `🔮 ${name} 的 1800 字手机灵数至尊推演报告`;
-            const body = `尊敬的 ${name}：\n\n您的手机号 (${phone}) 深度推演报告已生成！\n\n核心内核：${soul}号\n【报告摘录】您的事业场域呈现天医扩张态势，但需警惕守财磁场。建议多与宠物 MONEY 互动以中和负面电磁波，这对您的呼吸系统与睡眠质量大有裨益。\n\n完整版详述请至测算页面查看或下载 PDF 存档。\n\n祝您财富圆满，万事大吉！\n\n—— 阿盛 数字能量实验室`;
+            const subject = `🔮 ${name} 的 2500 字手机灵数至尊推演全书`;
+            const body = `尊敬的 ${name}：\n\n您的手机号 (${phone}) 深度推演报告已成功生成！\n\n核心灵数：${soul}号\n【报告摘录】您的事业场域呈现扩张态势，但需警惕隐性破耗。建议多与您的宠物 MONEY 互动，利用其天然磁场中和外部焦虑。资产配置建议采取 65:25:10 原则。\n\n完整详述请访问测算页面或下载 PDF 存档。\n\n祝您财富圆满，万事大吉！\n\n—— 您的能量顾问：波 (Bo)`;
             window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }
     </script>
